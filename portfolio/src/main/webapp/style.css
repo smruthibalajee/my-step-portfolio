@@ -1,9 +1,20 @@
+html {
+    background: url(images/ogdrawnwood.png);
+    background-position: center;
+    /*background-size: 840px 840px;*/
+}
+#header_text {
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  
 }
 
 #greeting-container {
-  margin-top: 20px;
+    
 }
