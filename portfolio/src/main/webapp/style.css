@@ -1,5 +1,6 @@
 :root {
     --main-green-color: rgba(9, 82, 9, 0.829);
+    --title-font-family: 'Bebas Neue', cursive;
 }
 #hero-image {
     background: url("/images/banana_transparent.png");
@@ -21,7 +22,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-family: 'Bebas Neue', cursive;
+    font-family: var(--title-font-family);
     font-style: bold;
     font-size: 175px;
     -webkit-text-stroke: 3px var(--main-green-color);
@@ -48,7 +49,7 @@ html {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-family: 'Bebas Neue', cursive;
+    font-family: var(--title-font-family);
     font-size: 40px;
 }
 
@@ -59,7 +60,7 @@ html {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-family: 'Bebas Neue', cursive;
+    font-family: var(--title-font-family);
     font-size: 50px;
     -webkit-text-stroke: 1px var(--main-green-color);
 }
@@ -72,7 +73,7 @@ html {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-family: 'Bebas Neue', cursive;
+    font-family: var(--title-font-family);
     font-size: 40px;
     margin: 3px 1px;
     cursor: pointer;

@@ -24,7 +24,7 @@ function getRandomGreeting() {
   return greeting;
 }
 
-/** Allows for multiple calls to the typeWriter function. */
+/** Allows for multiple calls to the typeWriter function, writes text on the webpage. */
 function writeText(inputText, container) {
     var i = 0;
     var txt = inputText;
@@ -42,11 +42,13 @@ function writeText(inputText, container) {
     typeWriter();
 }
 
+/** Function that calls writeText for the welcome messages. */
 function writeGreeting() {
     const greeting = getRandomGreeting();
     writeText(greeting, "greeting-container");
 }
 
+/** Function that calls writeText for the name in the hero header. */
 function writeName() {
     const name = 'Smruthi Balajee.';
     writeText(name, "hero-text");
