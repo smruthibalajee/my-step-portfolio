@@ -1,20 +1,79 @@
+:root {
+    --main-green-color: rgba(9, 82, 9, 0.829);
+}
+#hero-image {
+    background: url("/images/banana_transparent.png");
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    height: 600px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    border-radius: 5px;
+}
+
+#hero-text {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    font-style: bold;
+    font-size: 175px;
+    -webkit-text-stroke: 3px var(--main-green-color);
+    
+}
+
 html {
     background: url(images/ogdrawnwood.png);
     background-position: center;
-    /*background-size: 840px 840px;*/
-}
-#header_text {
-    margin-left: auto;
-    margin-right: auto;
-    
 }
 
 #content {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 50px;
+  font-family: 'Roboto', sans-serif;
   
 }
 
+#button-container {
+    text-align: center;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 40px;
+}
+
 #greeting-container {
-    
+    text-align: center;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 50px;
+    -webkit-text-stroke: 1px var(--main-green-color);
+}
+
+.button {
+    background-color: var(--main-green-color);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 40px;
+    margin: 3px 1px;
+    cursor: pointer;
 }

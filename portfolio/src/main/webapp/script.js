@@ -13,16 +13,44 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Gets a random greeting.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function getRandomGreeting() {
+    const greetings =
+      ['Welcome!', '¡Bienvenido!', '歡迎!', 'Welkom!'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  return greeting;
 }
+
+/** Allows for multiple calls to the typeWriter function. */
+function writeText(inputText, container) {
+    var i = 0;
+    var txt = inputText;
+    var speed = 90;
+
+    /** Types greeting on page. */
+    function typeWriter() {
+        if (i < txt.length) {
+            document.getElementById(container).innerHTML += txt.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+        }
+    }
+    document.getElementById(container).innerHTML = "";
+    typeWriter();
+}
+
+function writeGreeting() {
+    const greeting = getRandomGreeting();
+    writeText(greeting, "greeting-container");
+}
+
+function writeName() {
+    const name = 'Smruthi Balajee.';
+    writeText(name, "hero-text");
+}
+
+
+

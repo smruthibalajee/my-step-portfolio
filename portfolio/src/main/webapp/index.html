@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Karla&family=Montaga&family=Montserrat:wght@200&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="header_text">
-        <h1>Smruthi Balajee</h1>
-        <p>Welcome to my portfolio!</p>
+  <body onload="writeName()"> 
+    <div id="hero-image">
+    <div id="hero-text"></div>
+        <div id="button-container"><button class="button" onclick="writeGreeting()">Welcome to my portfolio</button></div>
+        <div id="greeting-container"></div>
     </div>
     <div id="content">
       <h2>About Me</h2>
@@ -25,9 +27,6 @@
       <p>Currently I'm working on developing a love for running long distances. I can't wait to get past the pain and 
           finally achieve the famous "runner's high"! On a more technical note, I'm expanding my software engineering 
           skills as a STEP Intern at Google for Summer 2020.</p>
-      <p>Click here to see a random photo:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
     </div>
   </body>
 </html>
