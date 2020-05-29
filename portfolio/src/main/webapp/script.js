@@ -17,11 +17,11 @@
  */
 function getRandomGreeting() {
     const greetings =
-      ['Welcome!', '¡Bienvenido!', '歡迎!', 'Welkom!'];
+        ['Welcome!', '¡Bienvenido!', '歡迎!', 'Welkom!'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-  return greeting;
+    // Pick a random greeting.
+    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    return greeting;
 }
 
 /** Allows for multiple calls to the typeWriter function, writes text on the webpage. */
@@ -58,12 +58,12 @@ function writeName() {
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
 var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementById("navbar").style.top = "0";
-  } else {
-    document.getElementById("navbar").style.top = "-50px";
-  }
-  prevScrollpos = currentScrollPos;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-50px";
+    }
+    prevScrollpos = currentScrollPos;
 }
 
 
