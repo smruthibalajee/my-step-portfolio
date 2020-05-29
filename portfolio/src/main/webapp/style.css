@@ -136,15 +136,23 @@ html {
 .about-text-container {
     position: relative;
     margin-left: 650px;
-    background-color: var(--main-green-color);
-    border: 15px solid rgba(151, 191, 128, 0.877);
+    background-color: rgba(255, 255, 255, 0.25);
     padding: 50px;
     width: 600px;
     top: -530px;
+    background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877));
+    background-repeat: no-repeat;
+    background-size: 10px 5px;
+    background-position: top left, top right, bottom left, bottom right;
+    border: solid rgba(151, 191, 128, 0.877);
+    border-width: 0 5px;
 }
 
 #about-text {
 	font-family: 'Montserrat', sans-serif;
     font-size: 20px;
-    color: rgb(253, 253, 253);
+    color: rgba(9, 82, 9);
 }
