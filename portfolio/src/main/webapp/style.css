@@ -2,12 +2,37 @@
     --main-green-color: rgba(9, 82, 9, 0.829);
     --title-font-family: 'Bebas Neue', cursive;
 }
+#navbar {
+  background-color: var(--main-green-color);
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Stay on top */
+  width: 98.89%; /* Full width */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+  z-index: 9;
+  margin-left: 0px
+}
+
+/* Style the navbar links */
+#navbar a {
+  float: right;
+  display: block;
+  color: rgba(255,255,255,0.829);
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
+  font-family: var(--title-font-family);
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: rgba(9, 82, 9);
+}
 #hero-image {
     background: url("/images/banana_transparent.png");
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0px;
-    height: 600px;
+    margin-top: 48.4px;
+    height: 700px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -26,7 +51,7 @@
     font-style: bold;
     font-size: 175px;
     -webkit-text-stroke: 3px var(--main-green-color);
-    
+    overflow: hidden
 }
 
 html {
@@ -51,6 +76,7 @@ html {
     color: white;
     font-family: var(--title-font-family);
     font-size: 40px;
+    overflow: hidden;
 }
 
 #greeting-container {
@@ -63,6 +89,7 @@ html {
     font-family: var(--title-font-family);
     font-size: 50px;
     -webkit-text-stroke: 1px var(--main-green-color);
+    overflow: hidden;
 }
 
 .button {
