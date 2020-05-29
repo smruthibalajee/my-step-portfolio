@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Karla&family=Montaga&family=Montserrat:wght@200&display=swap" rel="stylesheet">
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="header_text">
-        <h1>Smruthi Balajee</h1>
-        <p>Welcome to my portfolio!</p>
+  <body onload="writeName()"> 
+      <div id="navbar">
+        <a href="#home">Home</a>
+        <a href="#about-me">About Me</a>
+        <a href="#contact">Contact</a>
     </div>
+    <section id="home">
+        <div id="hero-image">
+            <div id="hero-text"></div>
+            <div id="button-container"><button class="button" onclick="writeGreeting()">Welcome to my portfolio</button></div>
+            <div id="greeting-container"></div>
+        </div>
+    </section>
     <div id="content">
-      <h2>About Me</h2>
-      <img src="images/smruthi_face.JPG" width="200" height="200"/>
-      <p>Hi! I'm a rising junior studying CS at UC Berkeley, with an emphasis in data engineering. 
-          I am particularly interested in the applications of artificial intelligence and machine learning 
-          in engineering solutions to problems, but am always excited to explore new fields! I also love teaching CS 
-          and am really passionate about making the subject accessible to all!</p>
-      <p>In my free time, I love to 3D model cool designs using Autodesk Inventor and make amateur artwork out of 
-          recycled wires, gears, and resistors. Last year, I took apart an old printer to make a small art installation 
-          for my wall! I also enjoy hiking, biking (especially spin), and eating chocolate. :) Once, I finished a Trader 
-          Joe's pound plus chocolate bar in four days. (It was during dead week, so no regrets!) </p>
-      <p>Currently I'm working on developing a love for running long distances. I can't wait to get past the pain and 
-          finally achieve the famous "runner's high"! On a more technical note, I'm expanding my software engineering 
-          skills as a STEP Intern at Google for Summer 2020.</p>
-      <p>Click here to see a random photo:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+        <div class="wrapper">
+            <section id="about-me">
+                <h2>About Me</h2>
+                <img src="images/smruthi_face.JPG" width="200" height="200"/>
+                <p>Hi! I'm a rising junior studying CS at UC Berkeley, with an emphasis in data engineering. 
+                    I am particularly interested in the applications of artificial intelligence and machine learning 
+                    in engineering solutions to problems, but am always excited to explore new fields! I also love teaching CS 
+                    and am really passionate about making the subject accessible to all!</p>
+                <p>In my free time, I love to 3D model cool designs using Autodesk Inventor and make amateur artwork out of 
+                    recycled wires, gears, and resistors. Last year, I took apart an old printer to make a small art installation 
+                    for my wall! I also enjoy hiking, biking (especially spin), and eating chocolate. :) Once, I finished a Trader 
+                    Joe's pound plus chocolate bar in four days. (It was during dead week, so no regrets!) </p>
+                <p>Currently I'm working on developing a love for running long distances. I can't wait to get past the pain and 
+                    finally achieve the famous "runner's high"! On a more technical note, I'm expanding my software engineering 
+                    skills as a STEP Intern at Google for Summer 2020.</p>
+            </section>
+        </div>
     </div>
   </body>
 </html>

@@ -13,16 +13,58 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Gets a random greeting.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function getRandomGreeting() {
+    const greetings =
+      ['Welcome!', '¡Bienvenido!', '歡迎!', 'Welkom!'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  return greeting;
 }
+
+/** Allows for multiple calls to the typeWriter function, writes text on the webpage. */
+function writeText(inputText, container) {
+    var i = 0;
+    var txt = inputText;
+    var speed = 90;
+
+    /** Types greeting on page. */
+    function typeWriter() {
+        if (i < txt.length) {
+            document.getElementById(container).innerHTML += txt.charAt(i);
+            i++;
+            setTimeout(typeWriter, speed);
+        }
+    }
+    document.getElementById(container).innerHTML = "";
+    typeWriter();
+}
+
+/** Function that calls writeText for the welcome messages. */
+function writeGreeting() {
+    const greeting = getRandomGreeting();
+    writeText(greeting, "greeting-container");
+}
+
+/** Function that calls writeText for the name in the hero header. */
+function writeName() {
+    const name = 'Smruthi Balajee.';
+    writeText(name, "hero-text");
+}
+
+/** Hides the navbar when scrolling down, nav bar appears when scrolling up. */
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-50px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+
+
+
