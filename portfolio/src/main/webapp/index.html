@@ -9,9 +9,10 @@
     </head>
     <body onload="writeName()">
         <div id="navbar">
-            <a href="#home">Home</a>
-            <a href="#about-me">About Me</a>
             <a href="#contact">Contact</a>
+            <a href="#projects">Projects</a>
+            <a href="#about-me">About Me</a>
+            <a href="#home">Home</a>
         </div>
         <section id="home">
             <div id="hero-image">
@@ -24,11 +25,11 @@
             <div class="wrapper">
                 <section id="about-me">
                     <div class="about-title-container">
-                        <img src="images/full_leaf.png" width="325" height="150"/>
+                        <img src="images/full_leaf.png" width="325" height="150" class= "responsive"/>
                         <div class ="about-title-text">About Me</div>
                     </div>
                     <div class="about-image-container">
-                        <img src="images/smruthi_face.JPG" onmouseover="this.src='images/smruthi_thumbs.JPG'" onmouseout="this.src='images/smruthi_face.JPG'" height="400" width="400">
+                        <img src="images/smruthi_face.JPG" onmouseover="this.src='images/smruthi_thumbs.JPG'" onmouseout="this.src='images/smruthi_face.JPG'" height="400" width="400" class= "responsive">
                     </div>
                     <div class="about-text-container">    
                         <div id="about-text">
@@ -43,6 +44,24 @@
                             <p>Currently I'm working on developing a love for running long distances. I can't wait to get past the pain and 
                                 finally achieve the famous "runner's high"! On a more technical note, I'm expanding my software engineering 
                                 skills as a STEP Intern at Google for Summer 2020.</p>
+                        </div>
+                    </div>
+                </section>
+                <section id="projects">
+                    <div class="proj-title-container">
+                        <img src="images/full_leaf.png" width="325" height="150" class= "responsive"/>
+                        <div class ="proj-title-text">Projects</div>
+                    </div>
+                    <div class="proj-1-container">
+                        <img src="images/gitlogo.png" height="200" width="200" class= "responsive">   
+                        <div id="proj-text">
+                            <p>Version Control System [java]: Designed, implemented, and tested a version control system with similar functionality to git. Includes features like committing, branching, and merging.</p>
+                        </div>
+                    </div>
+                    <div class="proj-2-container">
+                        <img src="images/basic-enigma.jpg" height="200" width="200" class= "responsive">   
+                        <div id="proj-text">
+                            <p>Enigma Machine [java]: Designed, wrote, and tested code that can encrypt and decrypt a message given an alphabet and specific permutation cycle, like the Enigma machine used in WWII.</p>
                         </div>
                     </div>
                 </section>
