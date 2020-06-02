@@ -137,7 +137,7 @@ html {
     position: relative;
     margin-left: 650px;
     background-color: rgba(255, 255, 255, 0.25);
-    padding: 50px;
+    padding: 30px;
     width: 600px;
     top: -530px;
     background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
@@ -237,7 +237,67 @@ html {
     top: -675px;
     height: auto;
 }
+.proj-3-container {
+    position: relative;
+    text-align: center;
+    margin-left: 20%;
+    background-color: rgba(255, 255, 255, 0.25);
+    background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+                linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877));
+    background-repeat: no-repeat;
+    background-size: 10px 5px;
+    background-position: top left, top right, bottom left, bottom right;
+    border: solid rgba(151, 191, 128, 0.877);
+    border-width: 0 5px;
+    padding: 50px;
+    width: 300px;
+    top: -600px;
+    height: auto;
+}
 
+.proj-3-container:hover {
+    position: relative;
+    text-align: center;
+    margin-left: 20%;
+    background-color: rgba(151, 191, 128, 0.877);
+    padding: 50px;
+    width: 300px;
+    top: -600px;
+    height: auto;
+}
+
+.proj-4-container {
+    position: relative;
+    text-align: center;
+    margin-left: 50%;
+    background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877));
+    background-color: rgba(255, 255, 255, 0.25);
+    background-repeat: no-repeat;
+    background-size: 10px 5px;
+    background-position: top left, top right, bottom left, bottom right;
+    border: solid rgba(151, 191, 128, 0.877);
+    border-width: 0 5px;
+    padding: 50px;
+    width: 300px;
+    top: -1006px;
+    height: auto;
+}
+
+.proj-4-container:hover {
+    position: relative;
+    text-align: center;
+    margin-left: 50%;
+    background-color: rgba(151, 191, 128, 0.877);
+    padding: 50px;
+    width: 300px;
+    top: -1006px;
+    height: auto;
+}
 #proj-text {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
