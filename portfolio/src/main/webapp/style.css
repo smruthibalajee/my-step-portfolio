@@ -77,12 +77,12 @@ html {
 #greeting-container {
     text-align: center;
     position: relative;
-    top: 40%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
     font-family: var(--title-font-family);
-    font-size: 50px;
+    font-size: 30px;
     -webkit-text-stroke: 1px var(--main-green-color);
     overflow: hidden;
 }

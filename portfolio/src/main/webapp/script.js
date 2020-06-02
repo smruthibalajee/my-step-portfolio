@@ -48,11 +48,32 @@ function writeGreeting() {
     writeText(greeting, "greeting-container");
 }
 
-/**Function that fetches a message from the server and writes it in the hero header. */
-function fetchAndWriteHello() {
-    fetch('/data').then(response => response.text()).then((hello) => {
-        writeText(hello, "greeting-container") = hello;
+/**Function that fetches a hard-coded text message from the server and writes it in the hero header. */
+function fetchAndWriteMsg() {
+    fetch('/data').then(response => response.text()).then((data) => {
+        writeText(data, "greeting-container") = data;
     });
+}
+
+/**Function that fetches a JSON message from the server and displays it in the hero header. */
+function fetchAndDisplayJSON() {
+    fetch('/data').then(response => response.json()).then((data) => {
+        const dataListElement = document.getElementById('greeting-container');
+        dataListElement.innerHTML = '';
+        dataListElement.appendChild(
+            createListElement(data.msg1));
+        dataListElement.appendChild(
+            createListElement(' ' + data.msg2));
+        dataListElement.appendChild(
+            createListElement(' ' + data.msg3));
+    });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
 
 /** Function that calls writeText for the name in the hero header. */
