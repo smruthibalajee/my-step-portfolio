@@ -104,6 +104,7 @@ html {
 #content {
     margin-left: auto;
     margin-right: auto;
+    padding-top: 100px;
 }
 
 .about-title-container {
@@ -149,6 +150,7 @@ html {
     background-position: top left, top right, bottom left, bottom right;
     border: solid rgba(151, 191, 128, 0.877);
     border-width: 0 5px;
+    margin-bottom: -315px
 }
 
 #about-text {
@@ -284,7 +286,7 @@ html {
     border-width: 0 5px;
     padding: 50px;
     width: 300px;
-    top: -1006px;
+    top: -1005px;
     height: auto;
 }
 
@@ -295,9 +297,10 @@ html {
     background-color: rgba(151, 191, 128, 0.877);
     padding: 50px;
     width: 300px;
-    top: -1006px;
+    top: -1005px;
     height: auto;
 }
+
 #proj-text {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
