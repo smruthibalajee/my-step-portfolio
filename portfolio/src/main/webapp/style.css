@@ -113,6 +113,7 @@ html {
     margin-left: 50px;
     top: 100px;
 }
+
 .about-title-text {
     position: absolute;
     top: 7.5px;
@@ -150,7 +151,7 @@ html {
     background-position: top left, top right, bottom left, bottom right;
     border: solid rgba(151, 191, 128, 0.877);
     border-width: 0 5px;
-    margin-bottom: -315px
+    margin-bottom: -315px;
 }
 
 #about-text {
@@ -166,6 +167,7 @@ html {
     margin-left: 50px;
     top: -300px;
 }
+
 .proj-title-text {
     position: absolute;
     top: 300px;
@@ -239,6 +241,7 @@ html {
     top: -675px;
     height: auto;
 }
+
 .proj-3-container {
     position: relative;
     text-align: center;

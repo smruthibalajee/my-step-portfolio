@@ -48,6 +48,13 @@ function writeGreeting() {
     writeText(greeting, "greeting-container");
 }
 
+/**Function that fetches a message from the server and writes it in the hero header. */
+function fetchAndWriteHello() {
+    fetch('/data').then(response => response.text()).then((hello) => {
+        writeText(hello, "greeting-container") = hello;
+    });
+}
+
 /** Function that calls writeText for the name in the hero header. */
 function writeName() {
     const name = 'Smruthi Balajee.';
