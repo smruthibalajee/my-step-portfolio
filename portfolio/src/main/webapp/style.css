@@ -82,7 +82,7 @@ html {
     transform: translate(-50%, -50%);
     color: white;
     font-family: var(--title-font-family);
-    font-size: 30px;
+    font-size: 40px;
     -webkit-text-stroke: 1px var(--main-green-color);
     overflow: hidden;
 }
