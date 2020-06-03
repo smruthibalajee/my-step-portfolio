@@ -32,7 +32,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //Initializes the ArrayList.
-	msg = new ArrayList();
+    msg = new ArrayList();
     msg.add("Hello there!");
     msg.add("Welcome to my portfolio!");
     msg.add("Scroll for more info.");
@@ -45,9 +45,7 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-    /**
-   * Converts a DataServlet instance into a JSON string using manual String concatentation.
-   */
+  /** Converts a DataServlet instance into a JSON string using manual String concatentation. */   
   private String convertToJson(ArrayList msg) {
     String json = "{";
     json += "\"msg1\": ";
