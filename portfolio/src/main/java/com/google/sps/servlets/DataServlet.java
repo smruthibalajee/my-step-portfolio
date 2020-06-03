@@ -14,19 +14,49 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  //Variable to hold an ArrayList of values to convert to JSON.
+  private List<String> msg;
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("Hello Smruthi!");
+    //Initializes the ArrayList.
+    msg = new ArrayList();
+    msg.add("Hello there!");
+    msg.add("Welcome to my portfolio!");
+    msg.add("Scroll for more info.");
+
+    //Convert data (ArrayList) to json.
+    String json = convertToJson(msg);
+
+    //Send the json as a response.
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  /** Converts a DataServlet instance into a JSON string using manual String concatentation. */   
+  private String convertToJson(ArrayList msg) {
+    String json = "{";
+    json += "\"msg1\": ";
+    json += "\"" + msg.get(0) + "\"";
+    json += ", ";
+    json += "\"msg2\": ";
+    json += "\"" + msg.get(1) + "\"";
+    json += ", ";
+    json += "\"msg3\": ";
+    json += "\"" + msg.get(2) + "\"";
+    json += "}";
+    return json;
   }
 }
