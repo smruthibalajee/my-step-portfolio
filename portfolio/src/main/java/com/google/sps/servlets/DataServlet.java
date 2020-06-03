@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class DataServlet extends HttpServlet {
 
   //Variable to hold an ArrayList of values to convert to JSON.
-  public ArrayList<String> msg;
+  private List<String> msg;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
