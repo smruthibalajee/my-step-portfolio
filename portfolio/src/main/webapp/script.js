@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//Array of greetings in different languages.
+var greetings = ['Welcome!', '¡Bienvenido!', 'Bienvenue!', 'Welkom!', 
+'Velkommen!', 'Benvenuto!'];
+
 /**
  * Gets a random greeting.
  */
-function getRandomGreeting() {
-    const greetings =
-        ['Welcome!', '¡Bienvenido!', '歡迎!', 'Welkom!'];
-
-    // Pick a random greeting.
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-    return greeting;
+function getRandomGreetingIndex() {
+    return Math.floor(Math.random() * greetings.length);
 }
 
 /** Allows for multiple calls to the typeWriter function, writes text on the webpage. */
@@ -42,10 +41,20 @@ function writeText(inputText, container) {
     typeWriter();
 }
 
-/** Function that calls writeText for the welcome messages. */
+/** Function that calls writeText for the welcome messages. Ensures that no greeting is repeated twice in a row.*/
+var oldIndex = 0;
 function writeGreeting() {
-    const greeting = getRandomGreeting();
-    writeText(greeting, "greeting-container");
+    var greetingIndex = getRandomGreetingIndex();
+    if (oldIndex != greetingIndex) {
+        oldIndex = greetingIndex;
+        writeText(greetings[greetingIndex], "greeting-container");
+    } else {
+        oldIndex = oldIndex + 1;
+        if (oldIndex >= greetings.length) {
+            oldIndex = 0;
+        }
+        writeText(greetings[oldIndex], "greeting-container");
+    }
 }
 
 /** Function that fetches a hard-coded text message from the server and writes it in the hero header. */

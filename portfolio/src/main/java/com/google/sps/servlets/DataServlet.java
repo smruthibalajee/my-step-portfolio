@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +48,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
+    // Define a data store object.
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
     boolean student = Boolean.parseBoolean(getParameter(request, "student", "false"));
@@ -54,25 +61,35 @@ public class DataServlet extends HttpServlet {
     String msg = getParameter(request, "comment-input", "");
 
     if (student) {
-      populateArrayList(comments, name, "student", msg);
+      populateDataStore(datastore, name, "student", msg);
     } else if (industry) {
-      populateArrayList(comments, name, "industry professional", msg);
+      populateDataStore(datastore, name, "industry professional", msg);
     } else if (recruiter) {
-      populateArrayList(comments, name, "recruiter", msg);
+      populateDataStore(datastore, name, "recruiter", msg);
     } else {
-      populateArrayList(comments, name, "other", msg);
+      populateDataStore(datastore, name, "other", msg);
     }
 
     //redirect back to original page
     response.sendRedirect("/index.html#comment");
   }
 
-  /** Helper function to add the name, category, and message to the right ArrayList. */
+  /** Helper function to add the name, category, and message to the ArrayList. */
   private void populateArrayList(List c, String name, String type, String msg) {
     name += " [" + type + "]:";
     c.add(name);
     c.add(msg);
     c.add("_");
+  }
+
+  /** Helper function to add the name, category, and message to the datastore. */
+  private void populateDataStore(DatastoreService d, String name, String type, String msg) {
+    Entity taskEntity = new Entity("Task");
+    taskEntity.setProperty("name", name);
+    taskEntity.setProperty("type", "[" + type + "]");
+    taskEntity.setProperty("message", msg);
+    taskEntity.setProperty("break", "_");
+    d.put(taskEntity);
   }
 
   /**
