@@ -31,6 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  // Define a data store object.
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
   //Variable to hold an ArrayList of values to convert to JSON.
   private List<String> comments = new ArrayList<>();
 
@@ -48,9 +51,6 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    // Define a data store object.
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
@@ -72,14 +72,6 @@ public class DataServlet extends HttpServlet {
 
     //redirect back to original page
     response.sendRedirect("/index.html#comment");
-  }
-
-  /** Helper function to add the name, category, and message to the ArrayList. */
-  private void populateArrayList(List c, String name, String type, String msg) {
-    name += " [" + type + "]:";
-    c.add(name);
-    c.add(msg);
-    c.add("_");
   }
 
   /** Helper function to add the name, category, and message to the datastore. */
