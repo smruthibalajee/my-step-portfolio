@@ -309,3 +309,7 @@ html {
     font-size: 14px;
     color: rgba(9, 82, 9);
 }
+
+#comments-container {
+    list-style-type: none;
+}
