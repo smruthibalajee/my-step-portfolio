@@ -60,9 +60,20 @@ function fetchAndDisplayJSON() {
     fetch('/data').then(response => response.json()).then((data) => {
         const dataListElement = document.getElementById('greeting-container');
         dataListElement.innerHTML = '';
-        dataListElement.appendChild(createListElement(data.msg1));
-        dataListElement.appendChild(createListElement(' ' + data.msg2));
-        dataListElement.appendChild(createListElement(' ' + data.msg3));
+        dataListElement.appendChild(createListElement(data[0]));
+        dataListElement.appendChild(createListElement(' ' + data[1]));
+        dataListElement.appendChild(createListElement(' ' + data[2]));
+    });
+}
+
+/** Function that fetches a comment from the server and displays it in the comment section. */
+function fetchAndDisplayComments() {
+    fetch('/data').then(response => response.json()).then((data) => {
+        const dataListElement = document.getElementById('comments-container');
+        dataListElement.innerHTML = '';
+        data.forEach((line) => {
+            dataListElement.appendChild(createListElement(line));
+        });
     });
 }
 

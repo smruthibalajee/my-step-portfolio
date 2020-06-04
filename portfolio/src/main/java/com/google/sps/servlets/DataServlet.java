@@ -16,47 +16,74 @@ package com.google.sps.servlets;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   //Variable to hold an ArrayList of values to convert to JSON.
-  private List<String> msg;
+  private List<String> comments = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //Initializes the ArrayList.
-    msg = new ArrayList();
-    msg.add("Hello there!");
-    msg.add("Welcome to my portfolio!");
-    msg.add("Scroll for more info.");
 
-    //Convert data (ArrayList) to json.
-    String json = convertToJson(msg);
+    //Convert data (ArrayList) to json, now using Gson instead of manually converting with string concatenation.
+    String json = new Gson().toJson(comments);
 
     //Send the json as a response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  /** Converts a DataServlet instance into a JSON string using manual String concatentation. */   
-  private String convertToJson(ArrayList msg) {
-    String json = "{";
-    json += "\"msg1\": ";
-    json += "\"" + msg.get(0) + "\"";
-    json += ", ";
-    json += "\"msg2\": ";
-    json += "\"" + msg.get(1) + "\"";
-    json += ", ";
-    json += "\"msg3\": ";
-    json += "\"" + msg.get(2) + "\"";
-    json += "}";
-    return json;
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form, depending on the type of commentor.
+    String name = getParameter(request, "name-input", "");
+    boolean student = Boolean.parseBoolean(getParameter(request, "student", "false"));
+    boolean industry = Boolean.parseBoolean(getParameter(request, "industry-professional", "false"));
+    boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
+    boolean other = Boolean.parseBoolean(getParameter(request, "other", "false"));
+    String msg = getParameter(request, "comment-input", "");
+
+    if (student) {
+      populateArrayList(comments, name, "student", msg);
+    } else if (industry) {
+      populateArrayList(comments, name, "industry professional", msg);
+    } else if (recruiter) {
+      populateArrayList(comments, name, "recruiter", msg);
+    } else {
+      populateArrayList(comments, name, "other", msg);
+    }
+
+    //redirect back to original page
+    response.sendRedirect("/index.html#comment");
+  }
+
+  /** Helper function to add the name, category, and message to the right ArrayList. */
+  private void populateArrayList(List c, String name, String type, String msg) {
+    name += " [" + type + "]:";
+    c.add(name);
+    c.add(msg);
+    c.add("_");
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
