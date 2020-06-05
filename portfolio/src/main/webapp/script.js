@@ -64,33 +64,34 @@ function fetchAndWriteMsg() {
     });
 }
 
-/** Function that fetches a JSON message from the server and displays it in the hero header. */
-function fetchAndDisplayJSON() {
-    fetch('/data').then(response => response.json()).then((data) => {
-        const dataListElement = document.getElementById('greeting-container');
-        dataListElement.innerHTML = '';
-        dataListElement.appendChild(createListElement(data[0]));
-        dataListElement.appendChild(createListElement(' ' + data[1]));
-        dataListElement.appendChild(createListElement(' ' + data[2]));
-    });
-}
-
 /** Function that fetches a comment from the server and displays it in the comment section. */
 function fetchAndDisplayComments() {
+    const dataListElement = document.getElementById('comments-container');
     fetch('/data').then(response => response.json()).then((data) => {
-        const dataListElement = document.getElementById('comments-container');
-        dataListElement.innerHTML = '';
-        data.forEach((line) => {
-            dataListElement.appendChild(createListElement(line));
+        data.forEach((comment) => {
+            dataListElement.appendChild(createCommentElement(comment));
         });
     });
 }
 
-/** Creates an <li> element containing text. */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+/** Creates a comment element by converting the object into Strings and concatenating them. */
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
+
+  const nameElement = document.createElement('span');
+  nameElement.innerText = comment.name;
+
+  const typeElement = document.createElement('span');
+  typeElement.innerText = comment.type;
+
+  const msgElement = document.createElement('li');
+  msgElement.innerText = comment.msg;
+
+  commentElement.appendChild(nameElement);
+  commentElement.appendChild(typeElement);
+  commentElement.appendChild(msgElement);
+  return commentElement;
 }
 
 /** Function that calls writeText for the name in the hero header. */

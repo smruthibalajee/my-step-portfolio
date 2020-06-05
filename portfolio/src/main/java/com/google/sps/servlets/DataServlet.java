@@ -17,7 +17,11 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +35,28 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  // Define a data store object.
-  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-
-  //Variable to hold an ArrayList of values to convert to JSON.
-  private List<String> comments = new ArrayList<>();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    //Variable to hold an ArrayList of values to convert to JSON.
+    List<Comment> commentsList = new ArrayList<>();
+
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      String name = (String) entity.getProperty("name");
+      String type = (String) entity.getProperty("type");
+      String msg = (String) entity.getProperty("msg");
+      long timestamp = (long) entity.getProperty("timestamp");
+
+      Comment c = new Comment(name, type, msg, timestamp);
+      commentsList.add(c);
+    }
 
     //Convert data (ArrayList) to json, now using Gson instead of manually converting with string concatenation.
-    String json = new Gson().toJson(comments);
+    String json = new Gson().toJson(commentsList);
 
     //Send the json as a response.
     response.setContentType("application/json;");
@@ -51,6 +66,8 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Define a data store object.
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
@@ -59,15 +76,16 @@ public class DataServlet extends HttpServlet {
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
     boolean other = Boolean.parseBoolean(getParameter(request, "other", "false"));
     String msg = getParameter(request, "comment-input", "");
+    long timestamp = System.currentTimeMillis();
 
     if (student) {
-      populateDataStore(datastore, name, "student", msg);
+      populateDataStore(datastore, name, "student", msg, timestamp);
     } else if (industry) {
-      populateDataStore(datastore, name, "industry professional", msg);
+      populateDataStore(datastore, name, "industry professional", msg, timestamp);
     } else if (recruiter) {
-      populateDataStore(datastore, name, "recruiter", msg);
+      populateDataStore(datastore, name, "recruiter", msg, timestamp);
     } else {
-      populateDataStore(datastore, name, "other", msg);
+      populateDataStore(datastore, name, "other", msg, timestamp);
     }
 
     //redirect back to original page
@@ -75,13 +93,13 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Helper function to add the name, category, and message to the datastore. */
-  private void populateDataStore(DatastoreService d, String name, String type, String msg) {
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("name", name);
-    taskEntity.setProperty("type", "[" + type + "]");
-    taskEntity.setProperty("message", msg);
-    taskEntity.setProperty("break", "_");
-    d.put(taskEntity);
+  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp) {
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("type", " [" + type + "]:");
+    commentEntity.setProperty("msg", msg);
+    commentEntity.setProperty("timestamp", timestamp);
+    d.put(commentEntity);
   }
 
   /**
