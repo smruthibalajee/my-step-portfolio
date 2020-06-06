@@ -50,8 +50,9 @@ public class DataServlet extends HttpServlet {
       String type = (String) entity.getProperty("type");
       String msg = (String) entity.getProperty("msg");
       long timestamp = (long) entity.getProperty("timestamp");
+      long id = entity.getKey().getId();
 
-      Comment c = new Comment(name, type, msg, timestamp);
+      Comment c = new Comment(name, type, msg, timestamp, id);
       commentsList.add(c);
     }
 

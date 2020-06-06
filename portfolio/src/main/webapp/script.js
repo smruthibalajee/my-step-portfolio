@@ -88,10 +88,30 @@ function createCommentElement(comment) {
   const msgElement = document.createElement('li');
   msgElement.innerText = comment.msg;
 
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+
+    // Remove the task from the DOM.
+    commentElement.remove();
+  });
+
+  const brElement = document.createElement('br');
+
   commentElement.appendChild(nameElement);
   commentElement.appendChild(typeElement);
   commentElement.appendChild(msgElement);
+  commentElement.appendChild(deleteButtonElement);
+  commentElement.appendChild(brElement);
   return commentElement;
+}
+
+/** Tells the server to delete the comment. */
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
 }
 
 /** Function that calls writeText for the name in the hero header. */
