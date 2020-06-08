@@ -100,8 +100,19 @@
                         <br/><br/>
 
                         <input type="submit" />
+
                     </form>
-                    <div id="comments-container"></div>
+                    <form action="/data" method="GET">
+                        <label for="num-comments">Number of displayed comments:</label>
+                        <select id="num-comments" name="num-comments" onchange="fetchAndDisplayNumComments(this.value)">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                        </select>
+                    </form>
+                    <div id="comments-container">
+                    </div>
                 </section>
             </div>
         </div>
