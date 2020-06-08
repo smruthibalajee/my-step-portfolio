@@ -7,10 +7,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Karla&family=Montaga&family=Montserrat:wght@200;400&family=Roboto&display=swap" rel="stylesheet">
         <script src="script.js"></script>
     </head>
-    <body onload="writeName(); fetchAndDisplayComments();">
+    <body onload="writeName(); fetchAndDisplayNumComments('5');">
         <div id="navbar">
             <a href = "mailto: smruthibalajee@berkeley.edu">Contact</a>
-            <a href="#comment">Comment</a>
+            <a href="#comment">Comments</a>
             <a href="#projects">Projects</a>
             <a href="#about-me">About Me</a>
             <a href="#home">Home</a>
@@ -88,6 +88,10 @@
                     </a>
                 </section>
                 <section id="comment">
+                    <div class="comment-title-container">
+                        <img src="images/full_leaf.png" width="325" height="150" class= "responsive"/>
+                        <div class ="comment-title-text">Comments</div>
+                    </div>
                     <form action="/data" method="POST">
                         <p>Enter your name:</p>
                         <textarea name="name-input"></textarea>

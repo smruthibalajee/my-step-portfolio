@@ -64,21 +64,8 @@ function fetchAndWriteMsg() {
     });
 }
 
-/** Function that fetches a comment from the server and displays it in the comment section. 
-    Automatically only displays 5 comments unless user picks another amount. 
-*/
-function fetchAndDisplayComments() {
-    const dataListElement = document.getElementById('comments-container');
-    fetch('/data?num-comments=5').then(response => response.json()).then((data) => {
-        data.forEach((comment) => {
-            dataListElement.appendChild(createCommentElement(comment));
-        });
-    });
-}
-
-/** Function that fetches a specified number of comments from the server and displays it in the comment section 
-    (only called when a value is picked from the dropdown). 
-*/
+/** Function that fetches a specified number of comments from the server and displays it in the comment section. 
+    Default number shown is 5 comments. */
 function fetchAndDisplayNumComments(num) {
     document.getElementById('comments-container').innerHTML = "";
     const dataListElement = document.getElementById('comments-container');
