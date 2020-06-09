@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -25,6 +26,7 @@ import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,12 +42,17 @@ public class DataServlet extends HttpServlet {
     //Variable to hold an ArrayList of values to convert to JSON.
     List<Comment> commentsList = new ArrayList<>();
 
+    // Get the input from the form for number of comments allowed on page.
+    int numComments = getCommentNum(request, response);
+
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
+    List<Entity> resultsList = results.asList(FetchOptions.Builder.withLimit(Integer.MAX_VALUE));
 
-    for (Entity entity : results.asIterable()) {
+    for (int i = 0; i < Math.min(numComments, resultsList.size()); i++) {
+      Entity entity = resultsList.get(i);
       String name = (String) entity.getProperty("name");
       String type = (String) entity.getProperty("type");
       String msg = (String) entity.getProperty("msg");
@@ -62,6 +69,22 @@ public class DataServlet extends HttpServlet {
     //Send the json as a response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  /** Returns the number entered by the user, or -1 if the choice was invalid. */
+  private int getCommentNum(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String commentNumString = getParameter(request, "num-comments", "");
+
+    // Convert the input to an int.
+    int commentNum;
+    try {
+      commentNum = Integer.parseInt(commentNumString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + commentNumString);
+      return -1;
+    }
+    return commentNum;
   }
 
 

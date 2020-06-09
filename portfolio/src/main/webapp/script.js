@@ -64,14 +64,16 @@ function fetchAndWriteMsg() {
     });
 }
 
-/** Function that fetches a comment from the server and displays it in the comment section. */
-function fetchAndDisplayComments() {
+/** Function that fetches a specified number of comments from the server and displays it in the comment section. 
+    Default number shown is 5 comments. */
+function fetchAndDisplayNumComments(num) {
+    document.getElementById('comments-container').innerHTML = "";
     const dataListElement = document.getElementById('comments-container');
-    fetch('/data').then(response => response.json()).then((data) => {
+    fetch('/data?num-comments='+num).then(response => response.json()).then((data) => {
         data.forEach((comment) => {
             dataListElement.appendChild(createCommentElement(comment));
         });
-    });
+    }); 
 }
 
 /** Creates a comment element by converting the object into Strings and concatenating them. */
