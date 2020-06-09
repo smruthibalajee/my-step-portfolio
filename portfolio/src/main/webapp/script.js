@@ -104,6 +104,7 @@ function createCommentElement(comment) {
   commentElement.appendChild(nameElement);
   commentElement.appendChild(typeElement);
   commentElement.appendChild(msgElement);
+  commentElement.appendChild(brElement);
   commentElement.appendChild(deleteButtonElement);
   commentElement.appendChild(brElement);
   return commentElement;

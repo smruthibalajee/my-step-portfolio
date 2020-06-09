@@ -181,7 +181,7 @@ html {
 }
 
 .proj-1-container {
-    position: relative;
+    position: absolute;
     text-align: center;
     margin-left: 20%;
     background-color: rgba(255, 255, 255, 0.25);
@@ -196,23 +196,17 @@ html {
     border-width: 0 5px;
     padding: 50px;
     width: 300px;
-    top: -250px;
+    top: 2050px;
     height: auto;
+    padding-bottom: -50%;
 }
 
 .proj-1-container:hover {
-    position: relative;
-    text-align: center;
-    margin-left: 20%;
     background-color: rgba(151, 191, 128, 0.877);
-    padding: 50px;
-    width: 300px;
-    top: -250px;
-    height: auto;
 }
 
 .proj-2-container {
-    position: relative;
+    position: absolute;
     text-align: center;
     margin-left: 50%;
     background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
@@ -227,19 +221,13 @@ html {
     border-width: 0 5px;
     padding: 50px;
     width: 300px;
-    top: -675px;
+    top: 2050px;
     height: auto;
+    padding-bottom: -50%;
 }
 
 .proj-2-container:hover {
-    position: relative;
-    text-align: center;
-    margin-left: 50%;
     background-color: rgba(151, 191, 128, 0.877);
-    padding: 50px;
-    width: 300px;
-    top: -675px;
-    height: auto;
 }
 
 .proj-3-container {
@@ -258,25 +246,19 @@ html {
     border-width: 0 5px;
     padding: 50px;
     width: 300px;
-    top: -600px;
+    top: 205px;
     height: auto;
+    padding-bottom: -50%;
 }
 
 .proj-3-container:hover {
-    position: relative;
-    text-align: center;
-    margin-left: 20%;
     background-color: rgba(151, 191, 128, 0.877);
-    padding: 50px;
-    width: 300px;
-    top: -600px;
-    height: auto;
 }
 
 .proj-4-container {
     position: relative;
     text-align: center;
-    margin-left: 50%;
+    margin-left: 50.6%;
     background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
             linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
             linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
@@ -289,19 +271,14 @@ html {
     border-width: 0 5px;
     padding: 50px;
     width: 300px;
-    top: -1005px;
+    top: -199px;
     height: auto;
+    overflow: hidden;
+    padding-bottom: -50%;
 }
 
 .proj-4-container:hover {
-    position: relative;
-    text-align: center;
-    margin-left: 50%;
     background-color: rgba(151, 191, 128, 0.877);
-    padding: 50px;
-    width: 300px;
-    top: -1005px;
-    height: auto;
 }
 
 #proj-text {
@@ -311,16 +288,16 @@ html {
 }
 
 .comment-title-container {
-    padding-top: 300px;
+    padding-top: -10px;
     position: relative;
     text-align: left;
     margin-left: 50px;
-    top: -300px;
+    padding-bottom: 60px;
 }
 
 .comment-title-text {
+    top: -10px;
     position: absolute;
-    top: 300px;
     left: 20px;
     margin-right: auto;
     font-family: var(--title-font-family);
@@ -328,8 +305,53 @@ html {
     font-style: bold;
     font-size: 120px;
     -webkit-text-stroke: 2px var(--main-green-color);
+    padding-bottom: 60px;
 }
 
 #comments-container {
     list-style-type: none;
+    margin-left: 20%;
+}
+
+.comment {
+    background-color: rgba(255, 255, 255, 0.25);
+    border: solid rgba(151, 191, 128, 0.877);
+    border-width: 1.5 1.5px;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    color: rgba(9, 82, 9);
+}
+
+.comment span {
+    flex-grow: 1;
+}
+
+.comment-form {
+    top: 100px;
+    margin-left: 20%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    color: rgba(9, 82, 9);
+    background-image: linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877)),
+            linear-gradient(rgba(151, 191, 128, 0.877), rgba(151, 191, 128, 0.877));
+    background-color: rgba(255, 255, 255, 0.25);
+    background-repeat: no-repeat;
+    background-size: 10px 5px;
+    background-position: top left, top right, bottom left, bottom right;
+    border: solid rgba(151, 191, 128, 0.877);
+    border-width: 0 3px;
+    width: 500px;
+    padding: 40px;
+}
+
+.number-com-form {
+    margin-left: 20%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    color: rgba(9, 82, 9);
 }

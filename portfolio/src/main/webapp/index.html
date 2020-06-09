@@ -92,41 +92,44 @@
                         <img src="images/full_leaf.png" width="325" height="150" class= "responsive"/>
                         <div class ="comment-title-text">Comments</div>
                     </div>
-                    <form action="/data" method="POST">
-                        <p>Enter your name:</p>
-                        <textarea name="name-input"></textarea>
-                        <br/><br/>
+                    <div class="comment-form">
+                        <form action="/data" method="POST">
+                            <p>Enter your name:</p>
+                            <textarea name="name-input"></textarea>
+                            <br/><br/>
 
-                        <p>Pick the category that best represents you:</p>
-                        <input type="checkbox" name="student" value="true"> Student
-                        <br/>
-                        <input type="checkbox" name="industry-professional" value="true"> Industry Professional
-                        <br/>
-                        <input type="checkbox" name="recruiter" value="true"> Recruiter
-                        <br/>
-                        <input type="checkbox" name="other" value="true"> Other
-                        <br/><br/>
+                            <p>Pick the category that best represents you:</p>
+                            <input type="checkbox" name="student" value="true"> Student
+                            <br/>
+                            <input type="checkbox" name="industry-professional" value="true"> Industry Professional
+                            <br/>
+                            <input type="checkbox" name="recruiter" value="true"> Recruiter
+                            <br/>
+                            <input type="checkbox" name="other" value="true"> Other
+                            <br/><br/>
 
-                        <p>I'd love to hear your thoughts:</p>
-                        <textarea name="comment-input"></textarea>
-                        <br/><br/>
+                            <p>I'd love to hear your thoughts:</p>
+                            <textarea name="comment-input"></textarea>
+                            <br/><br/>
 
-                        <input type="submit" />
-                        <br/><br/>
-                    </form>
-                    <form action="/data" method="GET">
-                        <br/><br/>
-                        <label for="num-comments">Number of displayed comments:</label>
-                        <select id="num-comments" name="num-comments" onchange="fetchAndDisplayNumComments(this.value)">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="30">30</option>
-                        </select>
-                        <br/><br/>
-                    </form>
-                    <div id="comments-container">
+                            <input type="submit" />
+                            <br/><br/>
+                        </form>
                     </div>
+                    <div class="number-com-form">
+                        <form action="/data" method="GET">
+                            <br/><br/>
+                            <label for="num-comments">Number of displayed comments:</label>
+                            <select id="num-comments" name="num-comments" onchange="fetchAndDisplayNumComments(this.value)">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                            </select>
+                            <br/><br/>
+                        </form>
+                    </div>
+                    <div id="comments-container"></div>
                 </section>
             </div>
         </div>
