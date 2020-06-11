@@ -86,6 +86,23 @@ function init() {
     }
 }
 
+// Initialize and add the map
+function initMap() {
+    // My location
+    var dublin = {lat: 37.702152, lng: -121.935791};
+    // The map, centered at Dublin
+    var map = new google.maps.Map(document.getElementById('map'), {zoom: 6, center: dublin});
+    // The marker, positioned at Dublin
+    var marker = new google.maps.Marker({position: dublin, map: map});
+    var contentString = 'Smruthi';
+    var infowindow = new google.maps.InfoWindow({
+    content: contentString
+    });
+    marker.addListener('click', function() {
+    infowindow.open(map, marker);
+    });
+}
+
 //Array of greetings in different languages.
 var greetings = ['Welcome!', '¡Bienvenido!', 'Bienvenue!', 'Welkom!', 
 'Velkommen!', 'Benvenuto!'];

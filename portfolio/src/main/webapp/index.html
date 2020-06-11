@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Karla&family=Montaga&family=Montserrat:wght@200;400&family=Roboto&display=swap" rel="stylesheet">
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDziCUo2dhp1wSWJcWEz5B8v-nQnlfY20"></script>
         <script src="script.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDziCUo2dhp1wSWJcWEz5B8v-nQnlfY20&callback=initMap"></script>
     </head>
     <body onload="writeName(); fetchAndDisplayNumComments('5');">
         <div id="navbar">
@@ -138,6 +138,8 @@
                     </div>
                     <div id="comments-container"></div>
                 </section>
+                <h1> Where are you from? </h1>
+                <div id="map"></div>
             </div>
         </div>
     </body>

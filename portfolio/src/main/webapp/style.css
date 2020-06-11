@@ -379,3 +379,8 @@ html {
     padding-left: 100px;
     padding-bottom: 100px;
 }
+
+#map {
+    width: 100%;
+    height: 500px;
+}
