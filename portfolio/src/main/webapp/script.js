@@ -14,76 +14,77 @@
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(init);
+var colors = {'darkest-green' : '#006400','dark-green' : '#228b22','medium-green' : '#8fbc8f','light-green' : '#97bf80'};
+//raw data
+var languages = [['Language', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
+                ['Java', 5, colors['darkest-green'], 'Advanced' ],
+                ['Python', 5, colors['darkest-green'], 'Advanced' ],
+                ['Javascript', 4, colors['dark-green'], 'Intermediate' ],
+                ['HTML/CSS', 4, colors['dark-green'], 'Intermediate' ],
+                ['Scheme', 3, colors['medium-green'], 'Intermediate' ],
+                ['SQL', 3, colors['medium-green'], 'Intermediate' ],
+                ['C', 2, colors['light-green'], 'Beginner' ]
+];
 
-    function init() {
-        //raw data
-        var languages = [['Language', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
-                        ['Java', 5, 'color: #006400', 'Advanced' ],
-                        ['Python', 5, 'color: #006400', 'Advanced' ],
-                        ['Javascript', 4, 'color: #228b22', 'Intermediate' ],
-                        ['HTML/CSS', 4, 'color: #228b22', 'Intermediate' ],
-                        ['Scheme', 3, 'color: #8fbc8f', 'Intermediate' ],
-                        ['SQL', 3, 'color: #8fbc8f', 'Intermediate' ],
-                        ['C', 2, 'color: #97bf80', 'Beginner' ]
-      ];
+var technologies = [['Tool/Technology', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
+                ['Autodesk Inventor', 5, colors['darkest-green'], 'Advanced' ],
+                ['JupyterLab', 5, colors['darkest-green'], 'Advanced' ],
+                ['NumPy', 4, colors['dark-green'], 'Intermediate' ],
+                ['Git', 4, colors['dark-green'], 'Intermediate' ],
+                ['Agile Scrum', 3, colors['medium-green'], 'Intermediate' ],
+                ['Adobe Suite', 2, colors['light-green'], 'Beginner' ]
+];
 
-      var technologies = [['Tool/Technology', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
-                        ['Autodesk Inventor', 5, 'color: #006400', 'Advanced' ],
-                        ['JupyterLab', 5, 'color: #006400', 'Advanced' ],
-                        ['NumPy', 4, 'color: #228b22', 'Intermediate' ],
-                        ['Git', 4, 'color: #228b22', 'Intermediate' ],
-                        ['Agile Scrum', 3, 'color: #8fbc8f', 'Intermediate' ],
-                        ['Adobe Suite', 2, 'color: #97bf80', 'Beginner' ]
-      ];
-        // Create and populate the data tables.
-        var data = [];
-        data[0] = google.visualization.arrayToDataTable(languages);
-        data[1] = google.visualization.arrayToDataTable(technologies);
+function init() {
+    // Create and populate the data tables.
+    var data = [];
+    data[0] = google.visualization.arrayToDataTable(languages);
+    data[1] = google.visualization.arrayToDataTable(technologies);
 
-        var options = {
-            'title': 'Skills',
-            'width':800,
-            'height':400,
-            'backgroundColor': {stroke:null, fill:null, strokeSize: 0},
-            hAxis: {minValue:0, maxValue:5, format: '0'},
-            animation:{
-                duration: 1000,
-                easing: 'out'
-            },
-            legend: { position: "none" },
-            fontName: 'Montserrat'
-        };
+    var options = {
+        'title': 'Skills',
+        'width':800,
+        'height':400,
+        'backgroundColor': {stroke:null, fill:null, strokeSize: 0},
+        hAxis: {minValue:0, maxValue:5, format: '0'},
+        animation:{
+            duration: 1000,
+            easing: 'out'
+        },
+        legend: { position: "none" },
+        fontName: 'Montserrat'
+    };
 
-        //variable to toggle between charts
-        var current = 0;
+    //variable to toggle between charts
+    var current = 0;
 
-        // Create and draw the visualization.
-        var chart = new google.visualization.BarChart(document.getElementById('chart-container'));
-        var button = document.getElementById('b1');
+    // Create and draw the visualization.
+    var chart = new google.visualization.BarChart(document.getElementById('chart-container'));
+    var button = document.getElementById('b1');
 
-        //Function draws the correct chart based on button value.
-        function drawChart() {
-            // Disabling the button while the chart is drawing.
-            button.disabled = true;
-            google.visualization.events.addListener(chart, 'ready',
-                function() {
-                    button.disabled = false;
-                    button.innerHTML = 'Switch to ' + (current ? 'Languages' : 'Technologies');
-                });
-            options['title'] = 'Proficiency in Various ' + (current ? 'Tools and Technologies' : 'Programming Languages');
+    //Function draws the correct chart based on button value.
+    function drawChart() {
+        // Disabling the button while the chart is drawing.
+        button.disabled = true;
+        google.visualization.events.addListener(chart, 'ready',
+            function() {
+                button.disabled = false;
+                button.innerHTML = 'Switch to ' + (current ? 'Languages' : 'Technologies');
+            });
+        options['title'] = 'Proficiency in Various ' + (current ? 'Tools and Technologies' : 'Programming Languages');
 
-            chart.draw(data[current], options);
-        }
-
-        //Draws language chart when loaded
-        drawChart();
-
-        //Changes button value when toggled
-        button.onclick = function() {
-        current = 1 - current;
-        drawChart();
-        }
+        chart.draw(data[current], options);
     }
+
+    //Draws language chart when loaded
+    drawChart();
+
+    //Changes button value when toggled
+    button.onclick = function() {
+    current = 1 - current;
+    drawChart();
+    }
+}
 
 //Array of greetings in different languages.
 var greetings = ['Welcome!', '¡Bienvenido!', 'Bienvenue!', 'Welkom!', 
