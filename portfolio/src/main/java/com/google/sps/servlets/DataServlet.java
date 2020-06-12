@@ -56,10 +56,11 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty("name");
       String type = (String) entity.getProperty("type");
       String msg = (String) entity.getProperty("msg");
+      String location = (String) entity.getProperty("location");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment c = new Comment(name, type, msg, timestamp, id);
+      Comment c = new Comment(name, type, msg, timestamp, id, location);
       commentsList.add(c);
     }
 
@@ -95,34 +96,37 @@ public class DataServlet extends HttpServlet {
     
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
+    String location = getParameter(request, "location-input", "");
     boolean student = Boolean.parseBoolean(getParameter(request, "student", "false"));
     boolean industry = Boolean.parseBoolean(getParameter(request, "industry-professional", "false"));
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
-    boolean other = Boolean.parseBoolean(getParameter(request, "other", "false"));
     String msg = getParameter(request, "comment-input", "");
     long timestamp = System.currentTimeMillis();
 
+    String type = "other";
+
     if (student) {
-      populateDataStore(datastore, name, "student", msg, timestamp);
+      type = "student";
     } else if (industry) {
-      populateDataStore(datastore, name, "industry professional", msg, timestamp);
+      type = "industry";
     } else if (recruiter) {
-      populateDataStore(datastore, name, "recruiter", msg, timestamp);
-    } else {
-      populateDataStore(datastore, name, "other", msg, timestamp);
+      type = "recruiter";
     }
+
+    populateDataStore(datastore, name, type, msg, timestamp, location);
 
     //redirect back to original page
     response.sendRedirect("/index.html#comment");
   }
 
   /** Helper function to add the name, category, and message to the datastore. */
-  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp) {
+  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp, String location) {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
-    commentEntity.setProperty("type", " [" + type + "]:");
+    commentEntity.setProperty("type", " [" + type + "] ");
     commentEntity.setProperty("msg", msg);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("location", location);
     d.put(commentEntity);
   }
 

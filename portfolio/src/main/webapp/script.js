@@ -13,8 +13,11 @@
 // limitations under the License.
 
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(init);
+google.charts.setOnLoadCallback(initChart);
+
+//Map of color names to hexcodes.
 var colors = {'darkest-green' : '#006400','dark-green' : '#228b22','medium-green' : '#8fbc8f','light-green' : '#97bf80'};
+
 //raw data
 var languages = [['Language', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
                 ['Java', 5, colors['darkest-green'], 'Advanced' ],
@@ -35,7 +38,8 @@ var technologies = [['Tool/Technology', 'Proficiency Level', { role: 'style' }, 
                 ['Adobe Suite', 2, colors['light-green'], 'Beginner' ]
 ];
 
-function init() {
+/** Function called when initializing the skills chart, displays chart on webpage. */
+function initChart() {
     // Create and populate the data tables.
     var data = [];
     data[0] = google.visualization.arrayToDataTable(languages);
@@ -43,8 +47,8 @@ function init() {
 
     var options = {
         'title': 'Skills',
-        'width':800,
-        'height':400,
+        'width':900,
+        'height':450,
         'backgroundColor': {stroke:null, fill:null, strokeSize: 0},
         hAxis: {minValue:0, maxValue:5, format: '0'},
         animation:{
@@ -52,7 +56,8 @@ function init() {
             easing: 'out'
         },
         legend: { position: "none" },
-        fontName: 'Montserrat'
+        fontName: 'Montserrat',
+        fontSize: 12
     };
 
     //variable to toggle between charts
@@ -86,21 +91,56 @@ function init() {
     }
 }
 
-// Initialize and add the map
+/** Function that is called when webpage is loaded. Created function because body onload doesn't support calling 3 functions in html */
+function onloadInit() {
+    writeName(); 
+    fetchAndDisplayNumComments('5');
+    initMap();
+}
+
+//variables used for initialization
+var geocoder;
+var map;
+
+/** Function that initializes map to my current location: Dublin, CA. Creates new geocoder and map objects. */
 function initMap() {
-    // My location
-    var dublin = {lat: 37.702152, lng: -121.935791};
-    // The map, centered at Dublin
-    var map = new google.maps.Map(document.getElementById('map'), {zoom: 6, center: dublin});
-    // The marker, positioned at Dublin
-    var marker = new google.maps.Marker({position: dublin, map: map});
-    var contentString = 'Smruthi';
-    var infowindow = new google.maps.InfoWindow({
-    content: contentString
+    var latlng = new google.maps.LatLng(37.702152, -121.935791);
+    var mapOptions = {
+        zoom: 2,
+        center: latlng
+    }
+    geocoder = new google.maps.Geocoder();
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+
+/** Function that takes in a country and name string and adds a marker to the map with the correct location 
+   and an info-window with the name. */
+function displayMap(country, name) {
+    initMap();
+    var address = country;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+            var contentString = name;
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status + " " + address);
+        }
     });
-    marker.addListener('click', function() {
-    infowindow.open(map, marker);
-    });
+}
+
+/** Function that takes in a comment and displays the map with the marker and info window.*/
+function displayMapComment(comment) {
+    displayMap(comment.location, comment.name);
 }
 
 //Array of greetings in different languages.
@@ -146,13 +186,6 @@ function writeGreeting() {
     }
 }
 
-/** Function that fetches a hard-coded text message from the server and writes it in the hero header. */
-function fetchAndWriteMsg() {
-    fetch('/data').then(response => response.text()).then((data) => {
-        writeText(data, "greeting-container") = data;
-    });
-}
-
 /** Function that fetches a specified number of comments from the server and displays it in the comment section. 
     Default number shown is 5 comments. */
 function fetchAndDisplayNumComments(num) {
@@ -161,42 +194,47 @@ function fetchAndDisplayNumComments(num) {
     fetch('/data?num-comments='+num).then(response => response.json()).then((data) => {
         data.forEach((comment) => {
             dataListElement.appendChild(createCommentElement(comment));
+            displayMapComment(comment);
         });
     }); 
 }
 
 /** Creates a comment element by converting the object into Strings and concatenating them. */
 function createCommentElement(comment) {
-  const commentElement = document.createElement('li');
-  commentElement.className = 'comment';
+    const commentElement = document.createElement('li');
+    commentElement.className = 'comment';
 
-  const nameElement = document.createElement('span');
-  nameElement.innerText = comment.name;
+    const nameElement = document.createElement('span');
+    nameElement.innerText = comment.name;
 
-  const typeElement = document.createElement('span');
-  typeElement.innerText = comment.type;
+    const typeElement = document.createElement('span');
+    typeElement.innerText = comment.type;
 
-  const msgElement = document.createElement('li');
-  msgElement.innerText = comment.msg;
+    const locationElement = document.createElement('span');
+    locationElement.innerText = "from " + comment.location + ":";
 
-  const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
+    const msgElement = document.createElement('li');
+    msgElement.innerText = comment.msg;
+
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
     deleteComment(comment);
 
     // Remove the task from the DOM.
     commentElement.remove();
-  });
+    });
 
-  const brElement = document.createElement('br');
+    const brElement = document.createElement('br');
 
-  commentElement.appendChild(nameElement);
-  commentElement.appendChild(typeElement);
-  commentElement.appendChild(msgElement);
-  commentElement.appendChild(brElement);
-  commentElement.appendChild(deleteButtonElement);
-  commentElement.appendChild(brElement);
-  return commentElement;
+    commentElement.appendChild(nameElement);
+    commentElement.appendChild(typeElement);
+    commentElement.appendChild(locationElement);
+    commentElement.appendChild(msgElement);
+    commentElement.appendChild(brElement);
+    commentElement.appendChild(deleteButtonElement);
+    commentElement.appendChild(brElement);
+    return commentElement;
 }
 
 /** Tells the server to delete the comment. */
