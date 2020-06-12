@@ -126,7 +126,7 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("type", " [" + type + "] ");
     commentEntity.setProperty("msg", msg);
     commentEntity.setProperty("timestamp", timestamp);
-    commentEntity.setProperty("location", "from " + location + ":");
+    commentEntity.setProperty("location", location);
     d.put(commentEntity);
   }
 

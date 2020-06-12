@@ -133,7 +133,7 @@ function displayMap(country, name) {
                 infowindow.open(map, marker);
             });
         } else {
-            //alert('Geocode was not successful for the following reason: ' + status);
+            alert('Geocode was not successful for the following reason: ' + status + " " + address);
         }
     });
 }
@@ -211,7 +211,7 @@ function createCommentElement(comment) {
     typeElement.innerText = comment.type;
 
     const locationElement = document.createElement('span');
-    locationElement.innerText = comment.location;
+    locationElement.innerText = "from " + comment.location + ":";
 
     const msgElement = document.createElement('li');
     msgElement.innerText = comment.msg;
