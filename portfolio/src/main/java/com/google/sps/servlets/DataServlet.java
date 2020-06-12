@@ -100,19 +100,20 @@ public class DataServlet extends HttpServlet {
     boolean student = Boolean.parseBoolean(getParameter(request, "student", "false"));
     boolean industry = Boolean.parseBoolean(getParameter(request, "industry-professional", "false"));
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
-    boolean other = Boolean.parseBoolean(getParameter(request, "other", "false"));
     String msg = getParameter(request, "comment-input", "");
     long timestamp = System.currentTimeMillis();
 
+    String type = "other";
+
     if (student) {
-      populateDataStore(datastore, name, "student", msg, timestamp, location);
+      type = "student";
     } else if (industry) {
-      populateDataStore(datastore, name, "industry professional", msg, timestamp, location);
+      type = "industry";
     } else if (recruiter) {
-      populateDataStore(datastore, name, "recruiter", msg, timestamp, location);
-    } else {
-      populateDataStore(datastore, name, "other", msg, timestamp, location);
+      type = "recruiter";
     }
+
+    populateDataStore(datastore, name, type, msg, timestamp, location);
 
     //redirect back to original page
     response.sendRedirect("/index.html#comment");

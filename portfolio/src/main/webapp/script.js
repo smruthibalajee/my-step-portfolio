@@ -102,7 +102,7 @@ function onloadInit() {
 var geocoder;
 var map;
 
-/**Function that initializes map to my current location: Dublin, CA. Creates new geocoder and map objects. */
+/** Function that initializes map to my current location: Dublin, CA. Creates new geocoder and map objects. */
 function initMap() {
     var latlng = new google.maps.LatLng(37.702152, -121.935791);
     var mapOptions = {
@@ -113,7 +113,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-/**Function that takes in a country and name string and adds a marker to the map with the correct location 
+/** Function that takes in a country and name string and adds a marker to the map with the correct location 
    and an info-window with the name. */
 function displayMap(country, name) {
     initMap();
@@ -133,12 +133,12 @@ function displayMap(country, name) {
                 infowindow.open(map, marker);
             });
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            //alert('Geocode was not successful for the following reason: ' + status);
         }
     });
 }
 
-/**Function that takes in a comment and displays the map with the marker and info window.*/
+/** Function that takes in a comment and displays the map with the marker and info window.*/
 function displayMapComment(comment) {
     displayMap(comment.location, comment.name);
 }
