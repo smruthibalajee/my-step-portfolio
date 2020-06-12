@@ -43,8 +43,8 @@ function init() {
 
     var options = {
         'title': 'Skills',
-        'width':800,
-        'height':400,
+        'width':900,
+        'height':450,
         'backgroundColor': {stroke:null, fill:null, strokeSize: 0},
         hAxis: {minValue:0, maxValue:5, format: '0'},
         animation:{
@@ -52,7 +52,8 @@ function init() {
             easing: 'out'
         },
         legend: { position: "none" },
-        fontName: 'Montserrat'
+        fontName: 'Montserrat',
+        fontSize: 12
     };
 
     //variable to toggle between charts
@@ -146,13 +147,6 @@ function writeGreeting() {
     }
 }
 
-/** Function that fetches a hard-coded text message from the server and writes it in the hero header. */
-function fetchAndWriteMsg() {
-    fetch('/data').then(response => response.text()).then((data) => {
-        writeText(data, "greeting-container") = data;
-    });
-}
-
 /** Function that fetches a specified number of comments from the server and displays it in the comment section. 
     Default number shown is 5 comments. */
 function fetchAndDisplayNumComments(num) {
@@ -167,36 +161,40 @@ function fetchAndDisplayNumComments(num) {
 
 /** Creates a comment element by converting the object into Strings and concatenating them. */
 function createCommentElement(comment) {
-  const commentElement = document.createElement('li');
-  commentElement.className = 'comment';
+    const commentElement = document.createElement('li');
+    commentElement.className = 'comment';
 
-  const nameElement = document.createElement('span');
-  nameElement.innerText = comment.name;
+    const nameElement = document.createElement('span');
+    nameElement.innerText = comment.name;
 
-  const typeElement = document.createElement('span');
-  typeElement.innerText = comment.type;
+    const typeElement = document.createElement('span');
+    typeElement.innerText = comment.type;
 
-  const msgElement = document.createElement('li');
-  msgElement.innerText = comment.msg;
+    const locationElement = document.createElement('span');
+    locationElement.innerText = comment.location;
 
-  const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
+    const msgElement = document.createElement('li');
+    msgElement.innerText = comment.msg;
+
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.innerText = 'Delete';
+    deleteButtonElement.addEventListener('click', () => {
     deleteComment(comment);
 
     // Remove the task from the DOM.
     commentElement.remove();
-  });
+    });
 
-  const brElement = document.createElement('br');
+    const brElement = document.createElement('br');
 
-  commentElement.appendChild(nameElement);
-  commentElement.appendChild(typeElement);
-  commentElement.appendChild(msgElement);
-  commentElement.appendChild(brElement);
-  commentElement.appendChild(deleteButtonElement);
-  commentElement.appendChild(brElement);
-  return commentElement;
+    commentElement.appendChild(nameElement);
+    commentElement.appendChild(typeElement);
+    commentElement.appendChild(locationElement);
+    commentElement.appendChild(msgElement);
+    commentElement.appendChild(brElement);
+    commentElement.appendChild(deleteButtonElement);
+    commentElement.appendChild(brElement);
+    return commentElement;
 }
 
 /** Tells the server to delete the comment. */

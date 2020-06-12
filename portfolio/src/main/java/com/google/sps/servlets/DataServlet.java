@@ -56,10 +56,11 @@ public class DataServlet extends HttpServlet {
       String name = (String) entity.getProperty("name");
       String type = (String) entity.getProperty("type");
       String msg = (String) entity.getProperty("msg");
+      String location = (String) entity.getProperty("location");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment c = new Comment(name, type, msg, timestamp, id);
+      Comment c = new Comment(name, type, msg, timestamp, id, location);
       commentsList.add(c);
     }
 
@@ -95,6 +96,7 @@ public class DataServlet extends HttpServlet {
     
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
+    String location = getParameter(request, "location-input", "");
     boolean student = Boolean.parseBoolean(getParameter(request, "student", "false"));
     boolean industry = Boolean.parseBoolean(getParameter(request, "industry-professional", "false"));
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
@@ -103,13 +105,13 @@ public class DataServlet extends HttpServlet {
     long timestamp = System.currentTimeMillis();
 
     if (student) {
-      populateDataStore(datastore, name, "student", msg, timestamp);
+      populateDataStore(datastore, name, "student", msg, timestamp, location);
     } else if (industry) {
-      populateDataStore(datastore, name, "industry professional", msg, timestamp);
+      populateDataStore(datastore, name, "industry professional", msg, timestamp, location);
     } else if (recruiter) {
-      populateDataStore(datastore, name, "recruiter", msg, timestamp);
+      populateDataStore(datastore, name, "recruiter", msg, timestamp, location);
     } else {
-      populateDataStore(datastore, name, "other", msg, timestamp);
+      populateDataStore(datastore, name, "other", msg, timestamp, location);
     }
 
     //redirect back to original page
@@ -117,12 +119,13 @@ public class DataServlet extends HttpServlet {
   }
 
   /** Helper function to add the name, category, and message to the datastore. */
-  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp) {
+  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp, String location) {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
-    commentEntity.setProperty("type", " [" + type + "]:");
+    commentEntity.setProperty("type", " [" + type + "] ");
     commentEntity.setProperty("msg", msg);
     commentEntity.setProperty("timestamp", timestamp);
+    commentEntity.setProperty("location", "from " + location + ":");
     d.put(commentEntity);
   }
 
