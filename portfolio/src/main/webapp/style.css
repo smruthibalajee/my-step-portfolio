@@ -404,8 +404,9 @@ html {
 }
 
 #map {
+    margin-top: 70px;
     position: absolute;
-    width: 700px;
+    width: 1000px;
     height: 700px;
     margin-left: 20%;
 }

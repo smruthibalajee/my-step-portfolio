@@ -9,7 +9,7 @@
         <script src="script.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDziCUo2dhp1wSWJcWEz5B8v-nQnlfY20&callback=initMap"></script>
     </head>
-    <body onload="writeName(); fetchAndDisplayNumComments('5');">
+    <body onload="onloadInit()">
         <div id="navbar">
             <a href = "mailto: smruthibalajee@berkeley.edu">Contact</a>
             <a href="#comment">Comments</a>
@@ -106,7 +106,7 @@
                     <div class="comment-form">
                         <form action="/data" method="POST">
                             <p>Enter your name:</p>
-                            <textarea name="name-input"></textarea>
+                            <textarea name="name-input" placeholder="Jane Doe"></textarea>
                             <br/><br/>
 
                             <p>Pick the category that best represents you:</p>
@@ -120,7 +120,7 @@
                             <br/><br/>
 
                             <p>I'd love to hear your thoughts:</p>
-                            <textarea name="comment-input"></textarea>
+                            <textarea name="comment-input" placeholder="Leave a public comment."></textarea>
                             <br/><br/>
 
                             <label for="location-input">Where are you from?</label>
