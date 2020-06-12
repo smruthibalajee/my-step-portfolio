@@ -38,7 +38,7 @@ var technologies = [['Tool/Technology', 'Proficiency Level', { role: 'style' }, 
                 ['Adobe Suite', 2, colors['light-green'], 'Beginner' ]
 ];
 
-/**Function called when initializing the skills chart, displays chart on webpage. */
+/** Function called when initializing the skills chart, displays chart on webpage. */
 function initChart() {
     // Create and populate the data tables.
     var data = [];
@@ -91,7 +91,7 @@ function initChart() {
     }
 }
 
-/**Function that is called when webpage is loaded. Created function because body onload doesn't support calling 3 functions in html */
+/** Function that is called when webpage is loaded. Created function because body onload doesn't support calling 3 functions in html */
 function onloadInit() {
     writeName(); 
     fetchAndDisplayNumComments('5');
