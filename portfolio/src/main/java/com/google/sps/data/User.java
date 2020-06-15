@@ -15,23 +15,16 @@
 package com.google.sps.data;
 
 /** A comment, with name, type of individual, and their message. */
-public final class Comment {
-
-  private final String name;
+public final class User {
+  private final boolean loginStatus;
   private final String email;
-  private final String type;
-  private final String msg;
-  private final long timestamp;
-  private final long id;
-  private final String location;
+  private final String logoutUrl;
+  private final String loginUrl;
 
-  public Comment(String name, String email, String type, String msg, long timestamp, long id, String location) {
-    this.name = name;
+  public User(Boolean loginStatus, String email, String logoutUrl, String loginUrl) {
+    this.loginStatus = loginStatus;
     this.email = email;
-    this.type = type;
-    this.msg = msg;
-    this.timestamp = timestamp;
-    this.id = id;
-    this.location = location;
+    this.logoutUrl = logoutUrl;
+    this.loginUrl = loginUrl;
   }
 }

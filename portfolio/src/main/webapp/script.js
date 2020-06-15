@@ -96,6 +96,7 @@ function onloadInit() {
     writeName(); 
     fetchAndDisplayNumComments('5');
     initMap();
+    fetchLoginInfo();
 }
 
 //variables used for initialization
@@ -184,6 +185,21 @@ function writeGreeting() {
         }
         writeText(greetings[oldIndex], "greeting-container");
     }
+}
+
+function fetchLoginInfo() {
+    var loginNav = document.getElementById("loginButton");
+    fetch('/login').then(response => response.json()).then((user) => {
+            if (user.loginStatus) {
+                //alert(user.logoutUrl);
+                loginNav.innerHTML = 'Logout';
+                loginNav.href = user.logoutUrl;
+            } else {
+                //alert(user.loginUrl);
+                loginNav.innerHTML = 'Login';
+                loginNav.href = user.loginUrl;
+            }
+        }); 
 }
 
 /** Function that fetches a specified number of comments from the server and displays it in the comment section. 

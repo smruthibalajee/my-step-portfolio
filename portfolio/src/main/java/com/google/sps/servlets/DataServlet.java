@@ -21,8 +21,11 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
+import com.google.sps.data.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +57,14 @@ public class DataServlet extends HttpServlet {
     for (int i = 0; i < Math.min(numComments, resultsList.size()); i++) {
       Entity entity = resultsList.get(i);
       String name = (String) entity.getProperty("name");
+      String email = (String) entity.getProperty("email");
       String type = (String) entity.getProperty("type");
       String msg = (String) entity.getProperty("msg");
       String location = (String) entity.getProperty("location");
       long timestamp = (long) entity.getProperty("timestamp");
       long id = entity.getKey().getId();
 
-      Comment c = new Comment(name, type, msg, timestamp, id, location);
+      Comment c = new Comment(name, email, type, msg, timestamp, id, location);
       commentsList.add(c);
     }
 
@@ -93,6 +97,16 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Define a data store object.
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+    UserService userService = UserServiceFactory.getUserService();
+
+    // Only logged-in users can post messages
+    if (!userService.isUserLoggedIn()) {
+      String urlToRedirectToAfterUserLogsIn = "/index.html#home";
+      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      response.sendRedirect(loginUrl);
+      return;
+    }
     
     // Get the input from the form, depending on the type of commentor.
     String name = getParameter(request, "name-input", "");
@@ -102,7 +116,7 @@ public class DataServlet extends HttpServlet {
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
     String msg = getParameter(request, "comment-input", "");
     long timestamp = System.currentTimeMillis();
-
+    String email = userService.getCurrentUser().getEmail();
     String type = "other";
 
     if (student) {
@@ -113,16 +127,17 @@ public class DataServlet extends HttpServlet {
       type = "recruiter";
     }
 
-    populateDataStore(datastore, name, type, msg, timestamp, location);
+    populateDataStore(datastore, name, email, type, msg, timestamp, location);
 
     //redirect back to original page
     response.sendRedirect("/index.html#comment");
   }
 
   /** Helper function to add the name, category, and message to the datastore. */
-  private void populateDataStore(DatastoreService d, String name, String type, String msg, long timestamp, String location) {
+  private void populateDataStore(DatastoreService d, String name, String email, String type, String msg, long timestamp, String location) {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("name", name);
+    commentEntity.setProperty("email", email);
     commentEntity.setProperty("type", " [" + type + "] ");
     commentEntity.setProperty("msg", msg);
     commentEntity.setProperty("timestamp", timestamp);

@@ -19,7 +19,7 @@ html {
 }
 
 /* Style the navbar links */
-#navbar a {
+#right a {
     float: right;
     display: block;
     color: rgba(255,255,255,0.829);
@@ -31,10 +31,29 @@ html {
     margin-right: 10px;
 }
 
-#navbar a:hover {
+#right a:hover {
     background-color: #ddd;
     color: rgba(9, 82, 9);
 }
+
+/* Style the navbar links */
+#left a {
+    float: left;
+    display: block;
+    color: rgba(255,255,255,0.829);
+    text-align: center;
+    padding: 9.8px;
+    text-decoration: none;
+    font-family: var(--title-font-family);
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+#left a:hover {
+    background-color: #ddd;
+    color: rgba(9, 82, 9);
+}
+
 #hero-image {
     background: url("/images/banana_transparent.png");
     margin-left: 0px;
