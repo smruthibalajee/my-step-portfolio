@@ -187,15 +187,16 @@ function writeGreeting() {
     }
 }
 
+/**Function that fetches the current user's login information from the server 
+   and changes the login button accordingly */
 function fetchLoginInfo() {
     var loginNav = document.getElementById("loginButton");
     fetch('/login').then(response => response.json()).then((user) => {
             if (user.loginStatus) {
-                //alert(user.logoutUrl);
                 loginNav.innerHTML = 'Logout';
                 loginNav.href = user.logoutUrl;
+                userEmail = user.email;
             } else {
-                //alert(user.loginUrl);
                 loginNav.innerHTML = 'Login';
                 loginNav.href = user.loginUrl;
             }
@@ -207,16 +208,21 @@ function fetchLoginInfo() {
 function fetchAndDisplayNumComments(num) {
     document.getElementById('comments-container').innerHTML = "";
     const dataListElement = document.getElementById('comments-container');
+    var userEmail = "";
+    
     fetch('/data?num-comments='+num).then(response => response.json()).then((data) => {
         data.forEach((comment) => {
-            dataListElement.appendChild(createCommentElement(comment));
-            displayMapComment(comment);
+            //Added to ensure that the user login email is fetched, even with page refreshes and new comments added
+            fetch('/login').then(response => response.json()).then((user) => {
+                dataListElement.appendChild(createCommentElement(comment, user));
+                displayMapComment(comment);
+            });
         });
     }); 
 }
 
 /** Creates a comment element by converting the object into Strings and concatenating them. */
-function createCommentElement(comment) {
+function createCommentElement(comment, user) {
     const commentElement = document.createElement('li');
     commentElement.className = 'comment';
 
@@ -232,24 +238,27 @@ function createCommentElement(comment) {
     const msgElement = document.createElement('li');
     msgElement.innerText = comment.msg;
 
-    const deleteButtonElement = document.createElement('button');
-    deleteButtonElement.innerText = 'Delete';
-    deleteButtonElement.addEventListener('click', () => {
-    deleteComment(comment);
-
-    // Remove the task from the DOM.
-    commentElement.remove();
-    });
-
     const brElement = document.createElement('br');
 
     commentElement.appendChild(nameElement);
     commentElement.appendChild(typeElement);
     commentElement.appendChild(locationElement);
+    commentElement.appendChild(brElement);
     commentElement.appendChild(msgElement);
-    commentElement.appendChild(brElement);
-    commentElement.appendChild(deleteButtonElement);
-    commentElement.appendChild(brElement);
+
+    //Adds check to see if the email associated with the comment is the same as logged in user; only logged-in users can delete
+    if (user.email == comment.email) {
+        const deleteButtonElement = document.createElement('button');
+        deleteButtonElement.innerText = 'Delete';
+        deleteButtonElement.addEventListener('click', () => {
+            deleteComment(comment);
+
+            // Remove the task from the DOM.
+            commentElement.remove();
+        });
+        commentElement.appendChild(brElement);
+        commentElement.appendChild(deleteButtonElement);
+    }
     return commentElement;
 }
 

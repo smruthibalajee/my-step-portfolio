@@ -104,6 +104,7 @@ public class DataServlet extends HttpServlet {
     if (!userService.isUserLoggedIn()) {
       String urlToRedirectToAfterUserLogsIn = "/index.html#home";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      //redirects to the login page if they try to post a comment without logging in.
       response.sendRedirect(loginUrl);
       return;
     }
@@ -116,7 +117,10 @@ public class DataServlet extends HttpServlet {
     boolean recruiter = Boolean.parseBoolean(getParameter(request, "recruiter", "false"));
     String msg = getParameter(request, "comment-input", "");
     long timestamp = System.currentTimeMillis();
+
+    //Email is assigned to comment based on the current user signed in.
     String email = userService.getCurrentUser().getEmail();
+    
     String type = "other";
 
     if (student) {

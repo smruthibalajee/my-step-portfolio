@@ -14,7 +14,7 @@
 
 package com.google.sps.data;
 
-/** A comment, with name, type of individual, and their message. */
+/** A user, with attributes on whether they are logged in and what email they logged in with. */
 public final class User {
   private final boolean loginStatus;
   private final String email;
