@@ -15,10 +15,10 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(initChart);
 
-//Map of color names to hexcodes.
+// Map of color names to hexcodes.
 var colors = {'darkest-green' : '#006400','dark-green' : '#228b22','medium-green' : '#8fbc8f','light-green' : '#97bf80'};
 
-//raw data
+// raw data
 var languages = [['Language', 'Proficiency Level', { role: 'style' }, { role: 'annotation' } ],
                 ['Java', 5, colors['darkest-green'], 'Advanced' ],
                 ['Python', 5, colors['darkest-green'], 'Advanced' ],
@@ -60,14 +60,14 @@ function initChart() {
         fontSize: 12
     };
 
-    //variable to toggle between charts
+    // variable to toggle between charts
     var current = 0;
 
     // Create and draw the visualization.
     var chart = new google.visualization.BarChart(document.getElementById('chart-container'));
     var button = document.getElementById('b1');
 
-    //Function draws the correct chart based on button value.
+    // Function draws the correct chart based on button value.
     function drawChart() {
         // Disabling the button while the chart is drawing.
         button.disabled = true;
@@ -81,10 +81,10 @@ function initChart() {
         chart.draw(data[current], options);
     }
 
-    //Draws language chart when loaded
+    // Draws language chart when loaded
     drawChart();
 
-    //Changes button value when toggled
+    // Changes button value when toggled
     button.onclick = function() {
     current = 1 - current;
     drawChart();
@@ -98,7 +98,7 @@ function onloadInit() {
     fetchLoginInfoAndComments('5');
 }
 
-//variables used for initialization
+// variables used for initialization
 var geocoder;
 var map;
 
@@ -143,7 +143,7 @@ function displayMapComment(comment) {
     displayMap(comment.location, comment.name);
 }
 
-//Array of greetings in different languages.
+// Array of greetings in different languages.
 var greetings = ['Welcome!', '¡Bienvenido!', 'Bienvenue!', 'Welkom!', 
 'Velkommen!', 'Benvenuto!'];
 
@@ -186,7 +186,7 @@ function writeGreeting() {
     }
 }
 
-/**Function that fetches the current user's login information from the server 
+/** Function that fetches the current user's login information from the server 
    and changes the login button accordingly. Also calls the fetch function for comments. */
 function fetchLoginInfoAndComments(num) {
     var loginNav = document.getElementById("loginButton");
@@ -242,7 +242,7 @@ function createCommentElement(comment, user) {
     commentElement.appendChild(brElement);
     commentElement.appendChild(msgElement);
 
-    //Adds check to see if the email associated with the comment is the same as logged in user; only logged-in users can delete
+    // Adds check to see if the email associated with the comment is the same as logged in user; only logged-in users can delete
     if (user.email == comment.email) {
         const deleteButtonElement = document.createElement('button');
         deleteButtonElement.innerText = 'Delete';

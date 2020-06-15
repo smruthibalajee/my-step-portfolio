@@ -31,10 +31,10 @@ public class LoginServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
 
-    //Creates new userService object to check if user is logged in.
+    // Creates new userService object to check if user is logged in.
     UserService userService = UserServiceFactory.getUserService();
 
-    //Default settings for user object
+    // Default settings for user object
     String userEmail = "";
     String logoutUrl = "";
     String loginUrl = "";
@@ -50,10 +50,10 @@ public class LoginServlet extends HttpServlet {
 
     User user = new User(userService.isUserLoggedIn(), userEmail, logoutUrl, loginUrl);
 
-    //Convert user login data to json.
+    // Convert user login data to json.
     String json = new Gson().toJson(user);
 
-    //Send the json as a response.
+    // Send the json as a response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }

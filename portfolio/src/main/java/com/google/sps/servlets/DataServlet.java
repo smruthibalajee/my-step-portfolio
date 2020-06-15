@@ -42,7 +42,7 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //Variable to hold an ArrayList of values to convert to JSON.
+    // Variable to hold an ArrayList of values to convert to JSON.
     List<Comment> commentsList = new ArrayList<>();
 
     // Get the input from the form for number of comments allowed on page.
@@ -68,10 +68,10 @@ public class DataServlet extends HttpServlet {
       commentsList.add(c);
     }
 
-    //Convert data (ArrayList) to json, now using Gson instead of manually converting with string concatenation.
+    // Convert data (ArrayList) to json, now using Gson instead of manually converting with string concatenation.
     String json = new Gson().toJson(commentsList);
 
-    //Send the json as a response.
+    // Send the json as a response.
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -104,7 +104,7 @@ public class DataServlet extends HttpServlet {
     if (!userService.isUserLoggedIn()) {
       String urlToRedirectToAfterUserLogsIn = "/index.html#comment";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-      //redirects to the login page if they try to post a comment without logging in.
+      // redirects to the login page if they try to post a comment without logging in.
       response.sendRedirect(loginUrl);
       return;
     }
@@ -118,7 +118,7 @@ public class DataServlet extends HttpServlet {
     String msg = getParameter(request, "comment-input", "");
     long timestamp = System.currentTimeMillis();
 
-    //Email is assigned to comment based on the current user signed in.
+    // Email is assigned to comment based on the current user signed in.
     String email = userService.getCurrentUser().getEmail();
     
     String type = "other";
@@ -133,7 +133,7 @@ public class DataServlet extends HttpServlet {
 
     populateDataStore(datastore, name, email, type, msg, timestamp, location);
 
-    //redirect back to original page
+    // redirect back to original page
     response.sendRedirect("/index.html#comment");
   }
 
