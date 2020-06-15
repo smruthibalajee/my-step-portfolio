@@ -102,7 +102,7 @@ public class DataServlet extends HttpServlet {
 
     // Only logged-in users can post messages
     if (!userService.isUserLoggedIn()) {
-      String urlToRedirectToAfterUserLogsIn = "/index.html#home";
+      String urlToRedirectToAfterUserLogsIn = "/index.html#comment";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
       //redirects to the login page if they try to post a comment without logging in.
       response.sendRedirect(loginUrl);

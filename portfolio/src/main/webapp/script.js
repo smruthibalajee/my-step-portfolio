@@ -94,9 +94,8 @@ function initChart() {
 /** Function that is called when webpage is loaded. Created function because body onload doesn't support calling 3 functions in html */
 function onloadInit() {
     writeName(); 
-    fetchAndDisplayNumComments('5');
     initMap();
-    fetchLoginInfo();
+    fetchLoginInfoAndComments('5');
 }
 
 //variables used for initialization
@@ -188,8 +187,8 @@ function writeGreeting() {
 }
 
 /**Function that fetches the current user's login information from the server 
-   and changes the login button accordingly */
-function fetchLoginInfo() {
+   and changes the login button accordingly. Also calls the fetch function for comments. */
+function fetchLoginInfoAndComments(num) {
     var loginNav = document.getElementById("loginButton");
     fetch('/login').then(response => response.json()).then((user) => {
             if (user.loginStatus) {
@@ -200,23 +199,20 @@ function fetchLoginInfo() {
                 loginNav.innerHTML = 'Login';
                 loginNav.href = user.loginUrl;
             }
+            fetchAndDisplayNumComments(num, user);
         }); 
 }
 
 /** Function that fetches a specified number of comments from the server and displays it in the comment section. 
     Default number shown is 5 comments. */
-function fetchAndDisplayNumComments(num) {
+function fetchAndDisplayNumComments(num, user) {
     document.getElementById('comments-container').innerHTML = "";
     const dataListElement = document.getElementById('comments-container');
-    var userEmail = "";
     
     fetch('/data?num-comments='+num).then(response => response.json()).then((data) => {
         data.forEach((comment) => {
-            //Added to ensure that the user login email is fetched, even with page refreshes and new comments added
-            fetch('/login').then(response => response.json()).then((user) => {
-                dataListElement.appendChild(createCommentElement(comment, user));
-                displayMapComment(comment);
-            });
+            dataListElement.appendChild(createCommentElement(comment, user));
+            displayMapComment(comment);
         });
     }); 
 }
