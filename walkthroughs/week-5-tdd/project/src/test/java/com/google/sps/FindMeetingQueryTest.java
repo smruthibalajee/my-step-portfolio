@@ -70,7 +70,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noOptionsForTooLongOfARequest() {
-    // The duration should be longer than a day. This means there should be no options.
+    // The duration should be longer than a day. 
+    // This means there should be no options.
     int duration = TimeRange.WHOLE_DAY.duration() + 1;
     MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), duration);
 
@@ -84,13 +85,16 @@ public final class FindMeetingQueryTest {
   public void eventSplitsRestriction() {
     // The event should split the day into two options (before and after the event).
     Collection<Event> events = Arrays.asList(new Event("Event 1",
-        TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES), Arrays.asList(PERSON_A)));
+        TimeRange.fromStartDuration(TIME_0830AM, DURATION_30_MINUTES),
+                                     Arrays.asList(PERSON_A)));
 
-    MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), DURATION_30_MINUTES);
+    MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A), 
+                                                DURATION_30_MINUTES);
 
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected =
-        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
+        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, 
+                                                TIME_0830AM, false),
             TimeRange.fromStartEnd(TIME_0900AM, TimeRange.END_OF_DAY, true));
 
     Assert.assertEquals(expected, actual);
@@ -98,8 +102,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void everyAttendeeIsConsidered() {
-    // Have each person have different events. We should see two options because each person has
-    // split the restricted times.
+    // Have each person have different events. We should see two options 
+    // because each person has split the restricted times.
     //
     // Events  :       |--A--|     |--B--|
     // Day     : |-----------------------------|
@@ -275,8 +279,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeeOneEvent() {
-      // Tests that if an optional attendee with a distinct event is included, only time slots where all attendees 
-      // (optional and mandatory) are returned.
+      // Tests that if an optional attendee with a distinct event is included, 
+      // only time slots where all attendees (optional and mandatory) are returned.
       Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
@@ -300,15 +304,15 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeeAllDay() {
-      // Tests that if an optional attendee is added but they are busy for the whole day, only the mandatory attendees
-      // are considered when generating a schedule.
+      // Tests that if an optional attendee is added but they are busy for the whole day, 
+      // only the mandatory attendees are considered when generating a schedule.
       Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
         new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_B)),
-        new Event("Event 3", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, TimeRange.WHOLE_DAY.duration()),
-            Arrays.asList(PERSON_C)));
+        new Event("Event 3", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, 
+            TimeRange.WHOLE_DAY.duration()), Arrays.asList(PERSON_C)));
 
         MeetingRequest request =
         new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
@@ -325,8 +329,9 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalIgnoredJustEnoughRoom() {
-    // Tests that if an optional attendee is available, but for a shorter duration than the meeting time, only
-    // the mandatory attendees are considered for generating schedules.
+    // Tests that if an optional attendee is available, but for a shorter duration 
+    // than the meeting time, only the mandatory attendees are considered
+    // for generating schedules.
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
             Arrays.asList(PERSON_A)),
@@ -347,7 +352,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noMandatoryMultipleGaps() {
-    // Tests that if there are no mandatory attendees, the time slots of optional attendees are returned.
+    // Tests that if there are no mandatory attendees, the time slots of 
+    // optional attendees are returned.
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartDuration(TIME_0800AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_A)),
@@ -370,12 +376,13 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noMandatoryNoGaps() {
-    // Tests that if there are no mandatory attendees and the optional attendees have no time slots, no times are returned.
+    // Tests that if there are no mandatory attendees and the optional attendees 
+    // have no time slots, no times are returned.
     Collection<Event> events = Arrays.asList(
-        new Event("Event 1", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, TimeRange.WHOLE_DAY.duration()),
-            Arrays.asList(PERSON_A)),
-        new Event("Event 2", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, TimeRange.WHOLE_DAY.duration()),
-            Arrays.asList(PERSON_B)));
+        new Event("Event 1", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, 
+            TimeRange.WHOLE_DAY.duration()), Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartDuration(TimeRange.START_OF_DAY, 
+            TimeRange.WHOLE_DAY.duration()), Arrays.asList(PERSON_B)));
 
     MeetingRequest request =
         new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);

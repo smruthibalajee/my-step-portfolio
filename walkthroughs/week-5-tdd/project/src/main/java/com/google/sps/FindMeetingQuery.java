@@ -8,7 +8,7 @@
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.    
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
@@ -22,10 +22,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
-/** Class that implements functions to return all the available timeslots for a meeting between given attendees. **/
+/** Class that implements functions to return all the available timeslots for a
+    meeting between given attendees. **/
 public final class FindMeetingQuery {
 
-  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+  public Collection<TimeRange> query(Collection<Event> events, 
+                                     MeetingRequest request) {
     // Check edge case where request is longer than a day
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
       return Arrays.asList();
@@ -45,52 +47,69 @@ public final class FindMeetingQuery {
     allPotentialAttendees.addAll(optionalAttendees);
 
 
-    // Check edge case where no attendees and no optional attendees have been requested
+    // Check edge case where no attendees and no optional attendees have been 
+    // requested
     if (allPotentialAttendees.size() == 0) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    ArrayList<TimeRange> allSortedUnavailableTimes = getSortedUnavailableTimes(allPotentialAttendees, events);
+    ArrayList<TimeRange> allSortedUnavailableTimes = 
+                getSortedUnavailableTimes(allPotentialAttendees, events);
 
-    // Check edge case where all the events provided don't have one of the mandatory attendees or any optional attendees
+    // Check edge case where all the events provided don't have one of the 
+    // mandatory attendees or any optional attendees
     if (allSortedUnavailableTimes == null) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
 
-    ArrayList<TimeRange> allDistinctUnavailableTimes = getDistinctUnavailableTimes(allSortedUnavailableTimes);
+    ArrayList<TimeRange> allDistinctUnavailableTimes = 
+                getDistinctUnavailableTimes(allSortedUnavailableTimes);
 
-    // ArrayList of all the times available for both mandatory and optional attendees
-    ArrayList<TimeRange> availableTimesForAllAttendees = getFilteredAvailableTimes(allDistinctUnavailableTimes, request.getDuration());
+    // ArrayList of all the times available for both mandatory and 
+    // optional attendees
+    ArrayList<TimeRange> availableTimesForAllAttendees = 
+                getFilteredAvailableTimes(allDistinctUnavailableTimes, 
+                                          request.getDuration());
 
-    // If there are no available times for both mandatory and optional attendees, then just get available times for mandatory attendees
-    if (availableTimesForAllAttendees == null || availableTimesForAllAttendees.size() == 0) {
-      ArrayList<TimeRange> mandatorySortedUnavailableTimes = getSortedUnavailableTimes(attendees, events);
-      // Edge case for where there are no mandatory attendees and there are no times available for optional attendees
+    // If there are no available times for both mandatory and optional 
+    // attendees, then just get available times for mandatory attendees
+    if (availableTimesForAllAttendees == null || 
+        availableTimesForAllAttendees.size() == 0) {
+      ArrayList<TimeRange> mandatorySortedUnavailableTimes = 
+                getSortedUnavailableTimes(attendees, events);
+      // Edge case for where there are no mandatory attendees and there are no 
+      // times available for optional attendees
       if (mandatorySortedUnavailableTimes == null) {
           return Arrays.asList();
       }
-      ArrayList<TimeRange> mandatoryDistinctUnavailableTimes = getDistinctUnavailableTimes(mandatorySortedUnavailableTimes);
-      return getFilteredAvailableTimes(mandatoryDistinctUnavailableTimes, request.getDuration());
+      ArrayList<TimeRange> mandatoryDistinctUnavailableTimes = 
+                getDistinctUnavailableTimes(mandatorySortedUnavailableTimes);
+      return getFilteredAvailableTimes(mandatoryDistinctUnavailableTimes, 
+                                        request.getDuration());
     }
 
     return availableTimesForAllAttendees;
   }
   
-  /** Helper function that returns a ArrayList of all the time ranges that the group of attendees is unavailable for, sorted by start time. **/
-  private ArrayList<TimeRange> getSortedUnavailableTimes(Collection<String> attendees, Collection<Event> events) {
+  /** Helper function that returns a ArrayList of all the time ranges that the 
+      group of attendees is unavailable for, sorted by start time. **/
+  private ArrayList<TimeRange> getSortedUnavailableTimes(
+                    Collection<String> attendees, Collection<Event> events) {
     ArrayList<TimeRange> unavailableTimes = new ArrayList<>();
     for (Event e : events) {
       for (String a : e.getAttendees()) {
         // Check if any of the requested attendees are also attending the event
         if (attendees.contains(a)) {
-          // If one attendee is attending the event, add the time range as unavailable and end the loop
+          // If one attendee is attending the event, add the time range as 
+          //unavailable and end the loop
           unavailableTimes.add(e.getWhen());
           break;
         }
       }
     }
 
-    // Check edge case where all the events provided don't have one of the given attendees
+    // Check edge case where all the events provided don't have one of the 
+    // given attendees
     if (unavailableTimes.size() == 0) {
       return null;
     }
@@ -99,8 +118,10 @@ public final class FindMeetingQuery {
     return unavailableTimes;
   }
 
-  /** Helper function that returns all the distinct unavailable times by merging times that are equal or overlapping. **/
-  private ArrayList<TimeRange> getDistinctUnavailableTimes(ArrayList<TimeRange> sortedUnavailableTimes) {
+  /** Helper function that returns all the distinct unavailable times by merging 
+      times that are equal or overlapping. **/
+  private ArrayList<TimeRange> getDistinctUnavailableTimes(
+                                ArrayList<TimeRange> sortedUnavailableTimes) {
     ArrayList<TimeRange> distinctUnavailableTimes = new ArrayList<>();
     TimeRange mergedTime = sortedUnavailableTimes.get(0);
     for (int i = 1; i < sortedUnavailableTimes.size(); i++) {
@@ -109,7 +130,8 @@ public final class FindMeetingQuery {
       if (mergedTime.overlaps(time)) {
         mergedTime = mergeEventTimes(mergedTime, time);
       } else {
-        // If current time doesn't overlap, adds the previous time to the ArrayList. Then, sets up the current time to check merge.
+        // If current time doesn't overlap, adds the previous time to the 
+        // ArrayList. Then, sets up the current time to check merge.
         distinctUnavailableTimes.add(mergedTime);
         mergedTime = time;
       }
@@ -120,7 +142,8 @@ public final class FindMeetingQuery {
     return distinctUnavailableTimes;
   }
   
-  /** Helper function that merges two time ranges and returns a new, longer (or equal) time range. **/
+  /** Helper function that merges two time ranges and returns a new, longer
+      (or equal) time range. **/
   private TimeRange mergeEventTimes(TimeRange time1, TimeRange time2) {
     int newStart = Math.min(time1.start(), time2.start());
     int newEnd = Math.max(time1.end(), time2.end());
@@ -128,8 +151,10 @@ public final class FindMeetingQuery {
     return newTimeRange;
   }
 
-  /** Helper function that returns the available times for all attendees that are at least as long as the duration of the meeting. **/
-  private ArrayList<TimeRange> getFilteredAvailableTimes(ArrayList<TimeRange> distinctUnavailableTimes, long duration) {
+  /** Helper function that returns the available times for all attendees that 
+      are at least as long as the duration of the meeting. **/
+  private ArrayList<TimeRange> getFilteredAvailableTimes(
+                ArrayList<TimeRange> distinctUnavailableTimes, long duration) {
     ArrayList<TimeRange> availableTimes = new ArrayList<>();
     // Check the time range from the start of the day to the start of first meeting.
     int availableStart = TimeRange.START_OF_DAY;
@@ -137,16 +162,19 @@ public final class FindMeetingQuery {
     for (int i = 0; i < distinctUnavailableTimes.size(); i++) {
       TimeRange currentUnavailable = distinctUnavailableTimes.get(i);
       availableEnd = currentUnavailable.start();
-      // If the time range is greater than the duration of the meeting, add it to list of available times.
+      // If the time range is greater than the duration of the meeting, add it 
+      // to list of available times.
       if (availableEnd - availableStart >= duration) {
-        availableTimes.add(TimeRange.fromStartEnd(availableStart, availableEnd, false));
+        availableTimes.add(TimeRange.fromStartEnd(availableStart,
+                                                 availableEnd, false));
       }
       availableStart = currentUnavailable.end();
     }
     // Check the time range from the end of last meeting to the end of the day.
     availableEnd = TimeRange.END_OF_DAY;
     if (availableEnd - availableStart >= duration) {
-      availableTimes.add(TimeRange.fromStartEnd(availableStart, availableEnd, true));
+      availableTimes.add(TimeRange.fromStartEnd(availableStart, 
+                                                availableEnd, true));
     }
     return availableTimes;
   }
